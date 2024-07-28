@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.finance.anubis.repository.mapper.TaskConfigMapper">
+    <resultMap id="BaseResultMap" type="com.finance.anubis.repository.entity.TaskConfigEntity">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="source_config" jdbcType="LONGVARCHAR" property="sourceConfig"/>
+        <result column="target_config" jdbcType="LONGVARCHAR" property="targetConfig"/>
+        <result column="error_threshold" jdbcType="INTEGER" property="errorThreshold"/>
+        <result column="detail_switch" jdbcType="BOOLEAN" property="detailSwitch"/>
+        <result column="retry_time" jdbcType="BOOLEAN" property="retryTime"/>
+        <result column="compare_keys" jdbcType="VARCHAR" property="compareKeys"
+                typeHandler="com.finance.anubis.repository.handler.ListTypeHandler" javaType="java.lang.String"/>
+        <result column="delay" jdbcType="INTEGER" property="delay"/>
+        <result column="unique_keys" jdbcType="VARCHAR" property="uniqueKeys"
+                typeHandler="com.finance.anubis.repository.handler.ListTypeHandler" javaType="java.lang.String"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , create_time, update_time, source_config, target_config,error_threshold,detail_switch,retry_time, compare_keys, delay,
+        unique_keys, `name`, version
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from task_config
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectListByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task_config
+        where id in
+        <foreach collection="configIds" open="(" separator="," close=")" index="index" item="configId">
+            #{configId}
+        </foreach>
+    </select>
+    <select id="selectByParams" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task_config
+        <where>
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+            <if test="createTime != null">
+                and create_time=#{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                and update_time=#{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sourceConfig != null">
+                and source_config=#{sourceConfig,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="targetConfig != null">
+                and target_config=#{targetConfig,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="errorThreshold != null">
+                and error_threshold=#{errorThreshold,jdbcType=INTEGER},
+            </if>
+            <if test="detailSwitch != null">
+                and detail_switch=#{detailSwitch,jdbcType=BOOLEAN},
+            </if>
+            <if test="retryTime != null">
+                and retry_time=#{retryTime,jdbcType=INTEGER},
+            </if>
+            <if test="compareKeys != null">
+                and
+                compare_keys=#{compareKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler,javaType=java.lang.String},
+            </if>
+            <if test="delay != null">
+                and delay=#{delay,jdbcType=INTEGER},
+            </if>
+            <if test="uniqueKeys != null">
+                and
+                unique_keys=#{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler,javaType=java.lang.String},
+            </if>
+            <if test="name != null">
+                and name=#{name,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                and version=#{version,jdbcType=INTEGER},
+            </if>
+        </where>
+    </select>
+    <select id="selectByTaskName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task_config
+        where name=#{taskName}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete from task_config
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.finance.anubis.repository.entity.TaskConfigEntity" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into task_config (create_time, update_time, source_config,
+        target_config,error_threshold,detail_switch,retry_time, compare_keys, delay,
+        unique_keys, `name`, version
+        )
+        values (#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{sourceConfig,jdbcType=LONGVARCHAR},
+        #{targetConfig,jdbcType=LONGVARCHAR},
+        #{errorThreshold,jdbcType=INTEGER},
+        #{detailSwitch,jdbcType=BOOLEAN},
+        #{retryTime,jdbcType=INTEGER},
+        #{compareKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+        #{delay,jdbcType=INTEGER},
+        #{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+        #{name,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.finance.anubis.repository.entity.TaskConfigEntity" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into task_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="sourceConfig != null">
+                source_config,
+            </if>
+            <if test="targetConfig != null">
+                target_config,
+            </if>
+            <if test="errorThreshold != null">
+                error_threshold,
+            </if>
+            <if test="detailSwitch != null">
+                detail_switch,
+            </if>
+            <if test="retryTime != null">
+                retry_time,
+            </if>
+            <if test="compareKeys != null">
+                compare_keys,
+            </if>
+            <if test="delay != null">
+                delay,
+            </if>
+            <if test="uniqueKeys != null">
+                unique_keys,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sourceConfig != null">
+                #{sourceConfig,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="targetConfig != null">
+                #{targetConfig,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="errorThreshold != null">
+                #{errorThreshold,jdbcType=INTEGER},
+            </if>
+            <if test="detailSwitch != null">
+                #{detailSwitch,jdbcType=BOOLEAN},
+            </if>
+            <if test="retryTime != null">
+                #{retryTime,jdbcType=INTEGER},
+            </if>
+            <if test="compareKeys != null">
+                #{compareKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+            </if>
+            <if test="delay != null">
+                #{delay,jdbcType=INTEGER},
+            </if>
+            <if test="uniqueKeys != null">
+                #{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.finance.anubis.repository.entity.TaskConfigEntity" keyProperty="id"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        update task_config
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sourceConfig != null">
+                source_config = #{sourceConfig,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="targetConfig != null">
+                target_config = #{targetConfig,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="errorThreshold != null">
+                error_threshold=#{errorThreshold,jdbcType=INTEGER},
+            </if>
+            <if test="detailSwitch != null">
+                detail_switch=#{detailSwitch,jdbcType=BOOLEAN},
+            </if>
+            <if test="retryTime != null">
+                retry_time=#{retryTime,jdbcType=INTEGER},
+            </if>
+            <if test="compareKeys != null">
+                compare_keys =
+                #{compareKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+            </if>
+            <if test="delay != null">
+                delay = #{delay,jdbcType=INTEGER},
+            </if>
+            <if test="uniqueKeys != null">
+                unique_keys =
+                #{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            version = version + 1
+        </set>
+        <where>
+            id = #{id,jdbcType=BIGINT}
+            <if test="version != null">
+                and version = #{version,jdbcType=INTEGER}
+            </if>
+        </where>
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.finance.anubis.repository.entity.TaskConfigEntity">
+        <!--@mbg.generated-->
+        update task_config
+        set create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        source_config = #{sourceConfig,jdbcType=LONGVARCHAR},
+        target_config = #{targetConfig,jdbcType=LONGVARCHAR},
+        error_threshold = #{errorThreshold,jdbcType=INTEGER},
+        detail_switch = #{detailSwitch,jdbcType=BOOLEAN},
+        retry_time=#{retryTime,jdbcType=INTEGER},
+        compare_keys =
+        #{compareKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+        delay = #{delay,jdbcType=INTEGER},
+        unique_keys =
+        #{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+        `name` = #{name,jdbcType=VARCHAR},
+        version = #{version,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

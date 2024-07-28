@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/consistency_platform?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 12345678
+    schema:
+      - classpath*:sql/schema/Task.sql
+      - classpath*:sql/schema/TaskConfig.sql
+  redis:
+    host: localhost
+    password: 12345678
+    database: 1
+  cloud:
+    sentinel:
+      enabled: false
+guming:
+  rocketmq:
+    name-srv-addr: localhost:9876
+    accessKey: 1
+    secretKey: 1
+anubis:
+  mq:
+    topic: compare_event
+xxl:
+  job:
+    open: true
+    accessToken:
+    admin:
+      addresses: http://localhost:8084/xxl-job-admin
+    executor:
+      appname: anubis-service
+      ip:
+      logpath: /log/xxljob
+      logretentiondays: -1
+      port: 18190
+logging:
+  level:
+    com.guming.finance.anubis.repository.mapper: debug

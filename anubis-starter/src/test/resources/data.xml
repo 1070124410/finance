@@ -1,0 +1,4 @@
+<dataset>
+    <TaskActivityResult id="1" task_activity_id="1" create_time="2023-02-27 16:15:20" update_time="2023-02-27 16:15:20" compare_source_data="{}" compare_target_data="{}" compare_keys="[]" variance_keys="[]" action_result="ACCORD" biz_key="123" times="0" />
+    <TaskActivityResult id="2" task_activity_id="1" create_time="2023-02-27 16:15:20" update_time="2023-02-27 16:15:20" compare_source_data="{}" compare_target_data="{}" compare_keys="[]" variance_keys="[]" action_result="ACCORD" biz_key="1234" times="0" />
+</dataset>

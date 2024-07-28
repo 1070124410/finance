@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.finance.anubis.repository.mapper.TaskActivityMapper">
+    <resultMap id="BaseResultMap" type="com.finance.anubis.repository.entity.TaskActivityEntity">
+        <!--@mbg.generated-->
+        <!--@Table task_activity-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="biz_key" jdbcType="VARCHAR" property="bizKey"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="context" jdbcType="LONGVARCHAR" property="context"/>
+        <result column="action" jdbcType="VARCHAR" property="action"/>
+        <result column="task_config_id" jdbcType="BIGINT" property="taskConfigId"/>
+        <result column="times" jdbcType="INTEGER" property="times"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, biz_key, create_time, update_time, context, `action`, task_config_id,times
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from task_activity
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectByParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task_activity
+        <where>
+            <if test="entity.id!=null">
+                and id = #{entity.id}
+            </if>
+            <if test="entity.bizKey !=null">
+                and biz_key = #{entity.bizKey}
+            </if>
+            <if test="entity.createTime !=null">
+                and create_time = #{entity.createTime}
+            </if>
+            <if test="entity.updateTime !=null">
+                and update_time=#{entity.updateTime}
+            </if>
+            <if test="entity.context !=null">
+                and context = #{entity.context}
+            </if>
+            <if test="entity.action !=null">
+                and `action` = #{entity.action}
+            </if>
+            <if test="entity.taskConfigId !=null">
+                and task_config_id = #{entity.taskConfigId}
+            </if>
+            <if test="entity.times !=null">
+                and times = #{entity.times}
+            </if>
+        </where>
+    </select>
+    <select id="selectPageByParams"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task_activity
+        <where>
+            <if test="entity.id!=null">
+                and id = #{entity.id}
+            </if>
+            <if test="entity.bizKey !=null">
+                and biz_key = #{entity.bizKey}
+            </if>
+            <if test="entity.createTime !=null">
+                and create_time = #{entity.createTime}
+            </if>
+            <if test="entity.updateTime !=null">
+                and update_time=#{entity.updateTime}
+            </if>
+            <if test="entity.context !=null">
+                and context = #{entity.context}
+            </if>
+            <if test="entity.action !=null">
+                and `action` = #{entity.action}
+            </if>
+            <if test="entity.taskConfigId !=null">
+                and task_id = #{entity.taskConfigId}
+            </if>
+            <if test="entity.times !=null">
+                and times = #{entity.times}
+            </if>
+        </where>
+        order by id desc
+        limit #{offset},#{size}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete from task_activity
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.finance.anubis.repository.entity.TaskActivityEntity" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into task_activity (biz_key, create_time, update_time,
+        context, `action`, task_config_id, times
+        )
+        values (#{bizKey,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{context,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR},
+        #{taskConfigId,jdbcType=BIGINT},#{times,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.finance.anubis.repository.entity.TaskActivityEntity" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into task_activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bizKey != null">
+                biz_key,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="context != null">
+                context,
+            </if>
+            <if test="action != null">
+                `action`,
+            </if>
+            <if test="taskConfigId != null">
+                task_config_id,
+            </if>
+            <if test="times != null">
+                times,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bizKey != null">
+                #{bizKey,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="context != null">
+                #{context,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null">
+                #{action,jdbcType=VARCHAR},
+            </if>
+            <if test="taskConfigId != null">
+                #{taskConfigId,jdbcType=BIGINT},
+            </if>
+            <if test="times != null">
+                #{times,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.finance.anubis.repository.entity.TaskActivityEntity">
+        <!--@mbg.generated-->
+        update task_activity
+        <set>
+            <if test="bizKey != null">
+                biz_key = #{bizKey,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="context != null">
+                context = #{context,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null">
+                `action` = #{action,jdbcType=VARCHAR},
+            </if>
+            <if test="taskConfigId != null">
+                task_config_id = #{taskConfigId,jdbcType=BIGINT},
+            </if>
+            <if test="times != null">
+                times = #{times,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.finance.anubis.repository.entity.TaskActivityEntity">
+        <!--@mbg.generated-->
+        update task_activity
+        set biz_key = #{bizKey,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        context = #{context,jdbcType=VARCHAR},
+        `action` = #{action,jdbcType=VARCHAR},
+        task_config_id = #{taskConfigId,jdbcType=BIGINT},
+        times= #{times,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByBizKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task_activity
+        where biz_key = #{bizKey}
+    </select>
+</mapper>

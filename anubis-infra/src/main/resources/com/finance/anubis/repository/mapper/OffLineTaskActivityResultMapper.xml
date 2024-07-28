@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.finance.anubis.repository.mapper.OffLineTaskActivityResultMapper">
+    <resultMap id="BaseResultMap" type="com.finance.anubis.repository.entity.OffLineTaskActivityResultEntity">
+        <!--@mbg.generated-->
+        <!--@Table offline_task_activity_result-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="task_activity_id" jdbcType="BIGINT" property="taskActivityId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="compare_keys" jdbcType="VARCHAR" property="compareKeys"/>
+        <result column="compare_data" jdbcType="VARCHAR" property="compareData"/>
+        <result column="result_type" jdbcType="VARCHAR" property="resultType"/>
+        <result column="verify_result" jdbcType="VARCHAR" property="verifyResult" />
+        <result column="biz_key" jdbcType="VARCHAR" property="bizKey"/>
+        <result column="times" jdbcType="INTEGER" property="times"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, task_activity_id, create_time, update_time,
+        compare_keys, compare_data,result_type, verify_result,biz_key,times
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from offline_task_activity_result
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectPageByParams"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from offline_task_activity_result
+        <where>
+            <if test="entity.id!=null">
+                and id = #{entity.id}
+            </if>
+            <if test="entity.taskActivityId !=null">
+                and task_activity_id = #{entity.taskActivityId}
+            </if>
+            <if test="entity.createTime !=null">
+                and create_time = #{entity.createTime}
+            </if>
+            <if test="entity.updateTime !=null">
+                and update_time=#{entity.updateTime}
+            </if>
+            <if test="entity.compareData !=null">
+                and compare_data=#{entity.compareData}
+            </if>
+            <if test="entity.compareKeys !=null">
+                and compare_keys=#{entity.compareKeys}
+            </if>
+            <if test="entity.resultType !=null">
+                and result_type=#{entity.resultType}
+            </if>
+            <if test="entity.verifyResult !=null">
+                and verify_result=#{entity.verifyResult}
+            </if>
+            <if test="entity.bizKey != null">
+                and biz_key = #{entity.bizKey}
+            </if>
+            <if test="entity.times != null">
+                and times = #{entity.times}
+            </if>
+        </where>
+        order by id desc
+        limit #{offset},#{size}
+    </select>
+    <select id="selectByParam"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from offline_task_activity_result
+        <where>
+            <if test="entity.id!=null">
+                and id = #{entity.id}
+            </if>
+            <if test="entity.taskActivityId !=null">
+                and task_activity_id = #{entity.taskActivityId}
+            </if>
+            <if test="entity.createTime !=null">
+                and create_time = #{entity.createTime}
+            </if>
+            <if test="entity.updateTime !=null">
+                and update_time=#{entity.updateTime}
+            </if>
+            <if test="entity.compareData !=null">
+                and compare_data=#{entity.compareData}
+            </if>
+            <if test="entity.compareKeys !=null">
+                and compare_keys=#{entity.compareKeys}
+            </if>
+            <if test="entity.resultType !=null">
+                and result_type=#{entity.resultType}
+            </if>
+            <if test="entity.verifyResult !=null">
+                and verify_result=#{entity.verifyResult}
+            </if>
+            <if test="entity.bizKey != null">
+                and biz_key = #{entity.bizKey}
+            </if>
+            <if test="entity.times != null">
+                and times = #{entity.times}
+            </if>
+        </where>
+    </select>
+    <select id="selectLatestByUniqueInfo"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from offline_task_activity_result
+        <where>
+            <if test="entity.taskActivityId !=null">
+                and task_activity_id = #{entity.taskActivityId}
+            </if>
+            <if test="entity.bizKey != null">
+                and biz_key = #{entity.bizKey}
+            </if>
+            <if test="entity.resultType != null">
+                and result_type = #{entity.resultType}
+            </if>
+        </where>
+        order by id desc
+        limit 1
+    </select>
+    <select id="selectLatestByParam"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from offline_task_activity_result
+        <where>
+            <if test="entity.id != null">
+                and id = #{entity.id}
+            </if>
+            <if test="entity.taskActivityId !=null">
+                and task_activity_id = #{entity.taskActivityId}
+            </if>
+            <if test="entity.bizKey != null">
+                and biz_key = #{entity.bizKey}
+            </if>
+            <if test="entity.resultType != null">
+                and result_type = #{entity.resultType}
+            </if>
+            <if test="entity.verifyResult != null">
+                and verify_result = #{entity.verifyResult}
+            </if>
+        </where>
+        group by id,result_type
+        order by id desc
+        limit 2
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete from offline_task_activity_result
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.finance.anubis.repository.entity.OffLineTaskActivityResultEntity"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into offline_task_activity_result (task_activity_id, create_time, update_time,
+        compare_keys, compare_data,result_type, verify_result,biz_key,times
+        )
+        values (#{taskActivityId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{compareKeys,jdbcType=LONGVARCHAR}, #{compareData,jdbcType=LONGVARCHAR},#{resultType,jdbcType=VARCHAR},
+        #{verifyResult,jdbcType=VARCHAR},#{bizKey,jdbcType=VARCHAR},#{times,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.finance.anubis.repository.entity.OffLineTaskActivityResultEntity"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into offline_task_activity_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskActivityId != null">
+                task_activity_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="compareData != null">
+                compare_data,
+            </if>
+            <if test="compareKeys != null">
+                compare_keys,
+            </if>
+            <if test="resultType != null">
+                result_type,
+            </if>
+            <if test="verifyResult != null">
+                verify_result,
+            </if>
+            <if test="bizKey != null">
+                biz_key,
+            </if>
+            <if test="times != null">
+                times,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskActivityId != null">
+                #{taskActivityId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="compareData != null">
+                #{compareData,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="compareKeys != null">
+                #{compareKeys,jdbcType=VARCHAR},
+            </if>
+            <if test="resultType != null">
+                #{resultType,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyResult != null">
+                #{verifyResult,jdbcType=VARCHAR},
+            </if>
+            <if test="bizKey != null">
+                #{bizKey,jdbcType=VARCHAR},
+            </if>
+            <if test="times != null">
+                #{times},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.finance.anubis.repository.entity.OffLineTaskActivityResultEntity">
+        <!--@mbg.generated-->
+        update offline_task_activity_result
+        <set>
+            <if test="taskActivityId != null">
+                task_activity_id = #{taskActivityId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="compareKeys != null">
+                compare_keys = #{compareKeys,jdbcType=VARCHAR},
+            </if>
+            <if test="varianceKeys != null">
+                variance_keys = #{varianceKeys,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyResult != null">
+                verify_result = #{verifyResult,jdbcType=VARCHAR},
+            </if>
+            <if test="bizKey != null">
+                biz_key = #{bizKey,jdbcType=VARCHAR},
+            </if>
+            <if test="times != null">
+                times = #{times,jdbcType=INTEGER}
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey"
+            parameterType="com.finance.anubis.repository.entity.OffLineTaskActivityResultEntity">
+        <!--@mbg.generated-->
+        update offline_task_activity_result
+        set task_activity_id = #{taskActivityId,jdbcType=BIGINT},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        compare_data=#{compareData,jdbcType=LONGNVARCHAR},
+        compare_keys = #{compareKeys,jdbcType=VARCHAR},
+        result_type = #{resultType,jdbcType=VARCHAR},
+        verify_result = #{verifyResult,jdbcType=VARCHAR},
+        biz_key = #{bizKey,jdbcType=VARCHAR},
+        times = #{times,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

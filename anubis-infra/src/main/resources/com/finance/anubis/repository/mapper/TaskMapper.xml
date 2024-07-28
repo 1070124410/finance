@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.finance.anubis.repository.mapper.TaskMapper">
+    <resultMap id="BaseResultMap" type="com.finance.anubis.repository.entity.TaskEntity">
+        <!--@mbg.generated-->
+        <!--@Table task-->
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="task_config_id" jdbcType="BIGINT" property="taskConfigId" />
+        <result column="status" jdbcType="VARCHAR" property="status" typeHandler="com.finance.anubis.repository.handler.BaseEnumTypeHandler" />
+        <result column="type" jdbcType="VARCHAR" property="type" typeHandler="com.finance.anubis.repository.handler.BaseEnumTypeHandler" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, create_time, update_time, task_config_id, `status`, type
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List" />
+        from task
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete from task
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.finance.anubis.repository.entity.TaskEntity" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into task (create_time, update_time, task_config_id,
+        `status`,type)
+        values (#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{taskConfigId,jdbcType=BIGINT},
+        #{status,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.finance.anubis.repository.entity.TaskEntity" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="taskConfigId != null">
+                task_config_id,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="taskConfigId != null">
+                #{taskConfigId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.finance.anubis.repository.entity.TaskEntity">
+        <!--@mbg.generated-->
+        update task
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="taskConfigId != null">
+                task_config_id = #{taskConfigId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.finance.anubis.repository.entity.TaskEntity">
+        <!--@mbg.generated-->
+        update task
+        set create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        task_config_id = #{taskConfigId,jdbcType=BIGINT},
+        `status` = #{status,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="listAllByStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task
+        <where>
+            <if test="status != null">
+                and `status` = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and `type` = #{type,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <select id="selectPagesByParams" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task
+        <where>
+            <if test="task.id!=null">
+                and id=#{task.id}
+            </if>
+            <if test="task.taskConfigId !=null">
+                and task_config_id = #{task.taskConfigId}
+            </if>
+            <if test="task.status !=null">
+                and status = #{task.status}
+            </if>
+            <if test="task.type !=null">
+                and type = #{task.type}
+            </if>
+            <if test="task.createTime !=null">
+                and create_time = #{task.createTime}
+            </if>
+            <if test="task.updateTime !=null">
+                and update_time=#{task.updateTime}
+            </if>
+        </where>
+        order by id desc
+        limit #{offset},#{size}
+    </select>
+    <select id="selectByParams" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task
+        <where>
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+            <if test="taskConfigId !=null">
+                and task_config_id = #{taskConfigId}
+            </if>
+            <if test="status !=null">
+                and status = #{status}
+            </if>
+            <if test="type !=null">
+                and type = #{type}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime !=null">
+                and update_time=#{updateTime}
+            </if>
+        </where>
+    </select>
+    <select id="selectListByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task
+        where id in
+        <foreach collection="taskIds" open="(" close=")" separator="," index="index" item="id">
+            #{id}
+        </foreach>
+    </select>
+    <select id="selectByTaskConfigId" resultType="com.finance.anubis.repository.entity.TaskEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from task
+        where task_config_id=#{id}
+    </select>
+</mapper>
