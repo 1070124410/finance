@@ -3,7 +3,8 @@
 主要功能是提供实时和离线对账功能，将数据端的账单信息进行对账，保证订单价格的一致性，减少人力对账成本，便于及时发现系统问题
 
 # 流程图
-![4983cb66ba16f9c1ba49307be2c8356](https://github.com/user-attachments/assets/3f9cb76b-62e9-4c1f-9410-ff24b2a3664c)
+![微信图片_20240728193531](https://github.com/user-attachments/assets/b30b3a21-cfb6-40e2-9c48-6cb0a54cc9e8)
+
 
 
 # 时序图
