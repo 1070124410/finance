@@ -1,7 +1,7 @@
 package com.finance.anubis.core;
 
-import com.finance.anubis.core.constants.enums.TaskStatus;
-import com.finance.anubis.core.task.model.Task;
+import com.finance.anubis.core.model.Task;
+import com.finance.anubis.enums.TaskStatus;
 import org.springframework.stereotype.Component;
 
 /**

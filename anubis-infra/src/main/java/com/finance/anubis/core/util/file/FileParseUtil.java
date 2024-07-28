@@ -1,6 +1,6 @@
 package com.finance.anubis.core.util.file;
 
-import com.finance.anubis.core.constants.enums.FileType;
+import com.finance.anubis.enums.FileType;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 

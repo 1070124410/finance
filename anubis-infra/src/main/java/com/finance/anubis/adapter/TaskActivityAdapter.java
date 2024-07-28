@@ -1,10 +1,10 @@
 package com.finance.anubis.adapter;
 
-import com.finance.anubis.req.TaskActivityReq;
-import com.finance.anubis.res.TaskActivityRes;
-import com.guming.api.json.JsonUtil;
-import com.finance.anubis.core.constants.enums.Action;
-import com.finance.anubis.core.task.model.TaskActivity;
+import com.finance.anubis.core.model.TaskActivity;
+import com.finance.anubis.enums.Action;
+import com.finance.anubis.request.TaskActivityReq;
+import com.finance.anubis.response.TaskActivityRes;
+import com.finance.anubis.utils.JsonUtil;
 
 /**
  * @Author yezhaoyang

@@ -1,15 +1,14 @@
 package com.finance.anubis.core.task.stage.offlineHandler;
 
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
-import com.finance.anubis.core.constants.enums.OffLineAction;
-import com.finance.anubis.core.constants.enums.StatusResult;
+import com.finance.anubis.core.model.OffLineTaskActivity;
+import com.finance.anubis.enums.OffLineAction;
+import com.finance.anubis.enums.StatusResult;
 import lombok.CustomLog;
 import lombok.Getter;
 
 /**
  * action 执行器
  */
-@CustomLog
 public abstract class OffLineActionHandler {
 
     @Getter

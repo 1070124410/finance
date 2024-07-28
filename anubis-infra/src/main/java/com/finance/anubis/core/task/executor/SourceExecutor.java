@@ -1,7 +1,7 @@
 package com.finance.anubis.core.task.executor;
 
 import com.finance.anubis.core.factory.ActionHandlerFactory;
-import com.finance.anubis.core.task.model.TaskActivity;
+import com.finance.anubis.core.model.TaskActivity;
 import org.springframework.stereotype.Component;
 
 @Component

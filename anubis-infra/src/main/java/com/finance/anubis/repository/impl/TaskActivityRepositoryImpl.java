@@ -1,16 +1,15 @@
 package com.finance.anubis.repository.impl;
 
-import com.finance.anubis.core.constants.enums.Action;
-import com.finance.anubis.core.task.model.TaskActivity;
+import com.finance.anubis.core.model.TaskActivity;
+import com.finance.anubis.enums.Action;
 import com.finance.anubis.exception.StatusCodeEnum;
+import com.finance.anubis.exception.StatusCodeException;
 import com.finance.anubis.repository.TaskActivityRepository;
 import com.finance.anubis.repository.dto.TaskActivityDTO;
 import com.finance.anubis.repository.entity.TaskActivityEntity;
 import com.finance.anubis.repository.entity.TaskConfigEntity;
 import com.finance.anubis.repository.mapper.TaskActivityMapper;
 import com.finance.anubis.repository.mapper.TaskConfigMapper;
-import com.guming.api.pojo.page.Limit;
-import com.guming.common.exception.StatusCodeException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -115,22 +114,4 @@ public class TaskActivityRepositoryImpl implements TaskActivityRepository {
         return entities.stream().map(e -> TaskActivityDTO.toModel(e, configEntityMap.get(idMap.get(e.getId())))).collect(Collectors.toList());
     }
 
-    @Override
-    public List<TaskActivity> getPageByParams(Limit page, TaskActivity activity) {
-        if (null == activity) {
-            return Collections.emptyList();
-        }
-        TaskActivityEntity entity = new TaskActivityEntity();
-        entity.setAction(activity.getAction());
-        List<TaskActivityEntity> entities = taskActivityMapper.selectPageByParams(page.getOffset(), page.getSize(), entity);
-        if (entities.isEmpty()) {
-            return Collections.emptyList();
-        }
-        //key:taskActivityId value:taskConfigId
-        Map<Long, Long> idMap = entities.stream().collect(Collectors.toMap(TaskActivityEntity::getId, TaskActivityEntity::getTaskConfigId));
-        //key:taskConfigId value:taskConfig
-        Map<Long, TaskConfigEntity> configEntityMap = taskConfigMapper.selectListByIds(new ArrayList<>(idMap.values())).stream().collect(Collectors.toMap(TaskConfigEntity::getId, a -> a));
-
-        return entities.stream().map(e -> TaskActivityDTO.toModel(e, configEntityMap.get(idMap.get(e.getId())))).collect(Collectors.toList());
-    }
 }

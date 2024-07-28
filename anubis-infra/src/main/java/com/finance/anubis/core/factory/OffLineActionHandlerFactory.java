@@ -1,17 +1,18 @@
 package com.finance.anubis.core.factory;
 
-import com.finance.anubis.core.constants.enums.OffLineAction;
 import com.finance.anubis.core.task.stage.offlineHandler.OffLineActionHandler;
+import com.finance.anubis.enums.OffLineAction;
 import lombok.CustomLog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
 import java.util.Map;
 
 @Component
-@CustomLog
 public class OffLineActionHandlerFactory extends StageHandlerFactory {
-
+    public final static Logger log = LoggerFactory.getLogger(OffLineActionHandlerFactory.class);
     private static final Map<OffLineAction, OffLineActionHandler> OFFLINE_STAGE_HANDLER_MAP = new EnumMap<>(OffLineAction.class);
 
 

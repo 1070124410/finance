@@ -1,10 +1,10 @@
 package com.finance.anubis.repository.dto;
 
 import cn.hutool.json.JSONUtil;
-import com.finance.anubis.core.config.*;
-import com.finance.anubis.core.constants.enums.TaskType;
+import com.finance.anubis.config.*;
+import com.finance.anubis.enums.TaskType;
 import com.finance.anubis.repository.entity.TaskConfigEntity;
-import com.guming.api.json.JsonUtil;
+import com.finance.anubis.utils.JsonUtil;
 
 import java.util.Collections;
 
@@ -19,8 +19,8 @@ public class TaskConfigDTO {
         taskConfigEntity.setVersion(taskConfig.getVersion());
         if (TaskType.ONLINE.equals(TaskType.of(taskConfig.getType()))) {
             OnLineTaskConfig config= (OnLineTaskConfig) taskConfig;
-            taskConfigEntity.setSourceConfig(config.getSourceConfig() == null ? null : JsonUtil.of(config.getSourceConfig()));
-            taskConfigEntity.setTargetConfig(config.getTargetConfigs() == null ? null : JsonUtil.of(config.getTargetConfigs()));
+            taskConfigEntity.setSourceConfig(config.getSourceConfig() == null ? null : JsonUtil.toJson(config.getSourceConfig()));
+            taskConfigEntity.setTargetConfig(config.getTargetConfigs() == null ? null : JsonUtil.toJson(config.getTargetConfigs()));
             taskConfigEntity.setCompareKeys(config.getCompareKeys());
             taskConfigEntity.setDelay(config.getDelay());
             taskConfigEntity.setErrorThreshold(0);
@@ -28,8 +28,8 @@ public class TaskConfigDTO {
             taskConfigEntity.setRetryTime(0);
         } else if (TaskType.OFFLINE.equals(TaskType.of(taskConfig.getType()))) {
             OffLineTaskConfig config= (OffLineTaskConfig) taskConfig;
-            taskConfigEntity.setSourceConfig(config.getSourceConfig() == null ? null : JsonUtil.of(config.getSourceConfig()));
-            taskConfigEntity.setTargetConfig(config.getTargetConfig() == null ? null : JsonUtil.of(config.getTargetConfig()));
+            taskConfigEntity.setSourceConfig(config.getSourceConfig() == null ? null : JsonUtil.toJson(config.getSourceConfig()));
+            taskConfigEntity.setTargetConfig(config.getTargetConfig() == null ? null : JsonUtil.toJson(config.getTargetConfig()));
             taskConfigEntity.setErrorThreshold(config.getErrorThreshold());
             taskConfigEntity.setDetailSwitch(config.getDetailSwitch());
             taskConfigEntity.setRetryTime(config.getRetryTime());
@@ -42,8 +42,8 @@ public class TaskConfigDTO {
     public static TaskConfigEntity toEntity(OnLineTaskConfig onLineTaskConfig) {
         TaskConfigEntity taskConfigEntity = new TaskConfigEntity();
         taskConfigEntity.setId(onLineTaskConfig.getId());
-        taskConfigEntity.setSourceConfig(onLineTaskConfig.getSourceConfig() == null ? null : JsonUtil.of(onLineTaskConfig.getSourceConfig()));
-        taskConfigEntity.setTargetConfig(onLineTaskConfig.getTargetConfigs() == null ? null : JsonUtil.of(onLineTaskConfig.getTargetConfigs()));
+        taskConfigEntity.setSourceConfig(onLineTaskConfig.getSourceConfig() == null ? null : JsonUtil.toJson(onLineTaskConfig.getSourceConfig()));
+        taskConfigEntity.setTargetConfig(onLineTaskConfig.getTargetConfigs() == null ? null : JsonUtil.toJson(onLineTaskConfig.getTargetConfigs()));
         taskConfigEntity.setCompareKeys(onLineTaskConfig.getCompareKeys());
         taskConfigEntity.setDelay(onLineTaskConfig.getDelay());
         taskConfigEntity.setErrorThreshold(0);
@@ -62,7 +62,7 @@ public class TaskConfigDTO {
         if (resourceTypeObj == null) {
             throw new RuntimeException("配置错误");
         }
-        onLineTaskConfig.setSourceConfig(JsonUtil.of(sourceConfig, MessageResourceConfig.class));
+        onLineTaskConfig.setSourceConfig(JsonUtil.string2Obj(sourceConfig, MessageResourceConfig.class));
         onLineTaskConfig.setTargetConfigs(JsonUtil.ofList(taskConfigEntity.getTargetConfig(), URLResourceConfig.class));
         onLineTaskConfig.setCompareKeys(taskConfigEntity.getCompareKeys());
         onLineTaskConfig.setDelay(taskConfigEntity.getDelay());
@@ -82,8 +82,8 @@ public class TaskConfigDTO {
         if (sourceResourceType == null || targetResourceType == null) {
             throw new RuntimeException("配置错误");
         }
-        taskConfig.setSourceConfig(JsonUtil.of(sourceConfig, OffLineResourceConfig.class));
-        taskConfig.setTargetConfig(JsonUtil.of(targetConfig, OffLineResourceConfig.class));
+        taskConfig.setSourceConfig(JsonUtil.string2Obj(sourceConfig, OffLineResourceConfig.class));
+        taskConfig.setTargetConfig(JsonUtil.string2Obj(targetConfig, OffLineResourceConfig.class));
         taskConfig.setDetailSwitch(taskConfigEntity.getDetailSwitch());
         taskConfig.setErrorThreshold(taskConfigEntity.getErrorThreshold());
         taskConfig.setRetryTime(taskConfigEntity.getRetryTime() == null ? 0 : taskConfigEntity.getRetryTime());
@@ -97,8 +97,8 @@ public class TaskConfigDTO {
     public static TaskConfigEntity toEntity(OffLineTaskConfig taskConfig) {
         TaskConfigEntity taskConfigEntity = new TaskConfigEntity();
         taskConfigEntity.setId(taskConfig.getId());
-        taskConfigEntity.setSourceConfig(taskConfig.getSourceConfig() == null ? null : JsonUtil.of(taskConfig.getSourceConfig()));
-        taskConfigEntity.setTargetConfig(taskConfig.getTargetConfig() == null ? null : JsonUtil.of(taskConfig.getTargetConfig()));
+        taskConfigEntity.setSourceConfig(taskConfig.getSourceConfig() == null ? null : JsonUtil.toJson(taskConfig.getSourceConfig()));
+        taskConfigEntity.setTargetConfig(taskConfig.getTargetConfig() == null ? null : JsonUtil.toJson(taskConfig.getTargetConfig()));
         taskConfigEntity.setErrorThreshold(taskConfig.getErrorThreshold());
         taskConfigEntity.setDetailSwitch(taskConfig.getDetailSwitch());
         taskConfigEntity.setRetryTime(taskConfig.getRetryTime());

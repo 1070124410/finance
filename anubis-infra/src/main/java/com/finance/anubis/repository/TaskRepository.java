@@ -1,7 +1,6 @@
 package com.finance.anubis.repository;
 
-import com.guming.api.pojo.page.Limit;
-import com.finance.anubis.core.task.model.Task;
+import com.finance.anubis.core.model.Task;
 import com.finance.anubis.repository.entity.TaskEntity;
 
 import java.util.List;
@@ -16,14 +15,6 @@ public interface TaskRepository {
      */
     Task selectById(Long id);
 
-    /**
-     * 分页查询任务列表
-     *
-     * @param page
-     * @param task
-     * @return
-     */
-    List<Task> selectTaskPage(Limit page, Task task);
 
     /**
      * 根据任务条件查询任务

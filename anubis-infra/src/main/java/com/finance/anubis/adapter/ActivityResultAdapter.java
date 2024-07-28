@@ -1,8 +1,9 @@
 package com.finance.anubis.adapter;
 
-import com.finance.anubis.core.task.model.TaskActivityResult;
-import com.finance.anubis.req.ActivityResultReq;
-import com.finance.anubis.res.ActivityResultRes;
+import com.finance.anubis.model.TaskActivityResult;
+import com.finance.anubis.request.ActivityResultReq;
+import com.finance.anubis.response.ActivityResultRes;
+import com.finance.anubis.utils.JsonUtil;
 
 /**
  * @Author yezhaoyang
@@ -14,7 +15,7 @@ public class ActivityResultAdapter {
     public static TaskActivityResult adapt2TaskActivityResult(ActivityResultReq activityResultReq) {
         String jsonString = JsonUtil.toJson(activityResultReq);
 
-        return JsonUtil.of(jsonString, TaskActivityResult.class);
+        return JsonUtil.string2Obj(jsonString, TaskActivityResult.class);
     }
 
     public static ActivityResultRes adapt2ActionResultRes(TaskActivityResult taskActivityResult) {

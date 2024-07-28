@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContextAware;
 
 import javax.annotation.Nonnull;
 
-@CustomLog
 public abstract class StageHandlerFactory implements InitializingBean, ApplicationContextAware {
 
     public ApplicationContext appContext;

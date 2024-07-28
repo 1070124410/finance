@@ -1,8 +1,7 @@
 package com.finance.anubis.repository;
 
-import com.guming.api.pojo.page.Limit;
-import com.finance.anubis.core.constants.enums.Action;
-import com.finance.anubis.core.task.model.TaskActivity;
+import com.finance.anubis.core.model.TaskActivity;
+import com.finance.anubis.enums.Action;
 
 import java.util.List;
 
@@ -55,11 +54,5 @@ public interface TaskActivityRepository {
      */
     List<TaskActivity> getByParams(TaskActivity activity);
 
-    /**
-     * 分页带参查询任务活动
-     *
-     * @param activity
-     * @return
-     */
-    List<TaskActivity> getPageByParams(Limit page, TaskActivity activity);
+
 }

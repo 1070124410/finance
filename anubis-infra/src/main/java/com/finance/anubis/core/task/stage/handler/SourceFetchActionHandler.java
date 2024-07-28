@@ -1,19 +1,19 @@
 package com.finance.anubis.core.task.stage.handler;
 
 import cn.hutool.json.JSONUtil;
-import com.aliyun.openservices.ons.api.Message;
+import com.finance.anubis.config.EventResourceConfig;
+import com.finance.anubis.config.OnLineTaskConfig;
+import com.finance.anubis.config.URLResourceConfig;
+import com.finance.anubis.core.model.OffLineTaskActivity;
+import com.finance.anubis.core.model.TaskActivity;
+import com.finance.anubis.enums.Action;
+import com.finance.anubis.enums.ResourceType;
+import com.finance.anubis.mq.MessageProducer;
 import com.finance.anubis.repository.TaskActivityRepository;
-import com.finance.anubis.core.config.EventResourceConfig;
-import com.finance.anubis.core.config.OnLineTaskConfig;
-import com.finance.anubis.core.config.URLResourceConfig;
-import com.finance.anubis.core.constants.Constants;
-import com.finance.anubis.core.constants.enums.Action;
-import com.finance.anubis.core.constants.enums.ResourceType;
 import com.finance.anubis.core.context.ActivityContext;
-import com.finance.anubis.core.task.model.TaskActivity;
-import com.guming.mq.api.MessageProducer;
-import com.guming.mq.base.MessageBuilder;
 import lombok.CustomLog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,12 +22,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static com.finance.anubis.constants.Constants.TASK_ACTIVITY_ACTION_TOPIC;
+
 /**
  * 原数据获取执行器
  */
 @Component
-@CustomLog
 public class SourceFetchActionHandler extends ActionHandler {
+    public final static Logger log= LoggerFactory.getLogger(SourceFetchActionHandler.class);
+
     public SourceFetchActionHandler(TaskActivityRepository taskActivityRepository,
                                     RestTemplate restTemplate,
                                     MessageProducer messageProducer) {
@@ -84,11 +87,8 @@ public class SourceFetchActionHandler extends ActionHandler {
         // 推送到mq
         int delay = taskActivity.getOnLineTaskConfig().getDelay();
         if (delay > 0) {
-            Message message = MessageBuilder.create().topic(Constants.ANUBIS_MQ_TASK_ACTIVITY_ACTION_TOPIC)
-                    .tag(taskActivity.getAction().name())
-                    .body(JSONUtil.parse(taskActivity.getResult()))
-                    .build();
-            messageProducer.sendDelayMsg(message, delay, TimeUnit.SECONDS);
+            int delayLevel = MessageProducer.getRocketMQDelayLevel(delay, TimeUnit.SECONDS);
+            messageProducer.sendDelayMsg(TASK_ACTIVITY_ACTION_TOPIC, taskActivity.getAction().name(), JSONUtil.parse(taskActivity.getResult()), delayLevel);
         } else {
             super.afterHandle(taskActivity);
         }

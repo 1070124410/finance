@@ -6,9 +6,9 @@ import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.finance.anubis.core.constants.enums.ResourceType;
-import com.finance.anubis.core.config.EventResourceConfig;
-import com.finance.anubis.core.config.MessageResourceConfig;
+import com.finance.anubis.config.EventResourceConfig;
+import com.finance.anubis.config.MessageResourceConfig;
+import com.finance.anubis.enums.ResourceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -154,13 +154,6 @@ public class ActivityContext implements Serializable {
         public abstract void remark();
     }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class ParamPath implements Serializable {
-        private String sourceKey;
-        private String path;
-    }
 
     @EqualsAndHashCode(callSuper = true)
     @NoArgsConstructor

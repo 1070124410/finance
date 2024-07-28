@@ -1,11 +1,10 @@
 package com.finance.anubis.repository.impl;
 
-import com.finance.anubis.core.task.model.TaskActivityResult;
+import com.finance.anubis.model.TaskActivityResult;
 import com.finance.anubis.repository.ActivityResultRepository;
 import com.finance.anubis.repository.dto.TaskActivityResultDTO;
 import com.finance.anubis.repository.entity.TaskActivityResultEntity;
 import com.finance.anubis.repository.mapper.TaskActivityResultMapper;
-import com.guming.api.pojo.page.Limit;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
@@ -63,19 +62,6 @@ public class ActivityResultRepositoryImpl implements ActivityResultRepository {
             return Collections.emptyList();
         }
         List<TaskActivityResultEntity> entities = taskActivityResultMapper.selectByParam(TaskActivityResultDTO.toEntity(taskActivityResult));
-        if (CollectionUtils.isEmpty(entities)) {
-            return Collections.emptyList();
-        }
-
-        return entities.stream().map(TaskActivityResultDTO::toModel).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<TaskActivityResult> selectPageByParams(Limit page, TaskActivityResult taskActivityResult) {
-        if (null == taskActivityResult) {
-            return Collections.emptyList();
-        }
-        List<TaskActivityResultEntity> entities = taskActivityResultMapper.selectPageByParams(page.getOffset(), page.getSize(), TaskActivityResultDTO.toEntity(taskActivityResult));
         if (CollectionUtils.isEmpty(entities)) {
             return Collections.emptyList();
         }

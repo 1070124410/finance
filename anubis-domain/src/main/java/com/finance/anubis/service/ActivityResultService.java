@@ -1,7 +1,7 @@
 package com.finance.anubis.service;
 
-import com.finance.anubis.req.ActivityResultReq;
-import com.finance.anubis.res.ActivityResultRes;
+import com.finance.anubis.request.ActivityResultReq;
+import com.finance.anubis.response.ActivityResultRes;
 
 import java.util.List;
 
@@ -19,14 +19,6 @@ public interface ActivityResultService {
      * @return
      */
     List<ActivityResultRes> selectByParams(ActivityResultReq activityResultReq);
-
-    /**
-     * 分页带参查询
-     *
-     * @param activityResultReq
-     * @return
-     */
-    List<ActivityResultRes> selectPageByParams(ActivityResultReq activityResultReq);
 
     /**
      * 根据唯一信息查询最新结果

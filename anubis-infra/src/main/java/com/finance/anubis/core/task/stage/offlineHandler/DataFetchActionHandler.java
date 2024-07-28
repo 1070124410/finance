@@ -1,32 +1,31 @@
 package com.finance.anubis.core.task.stage.offlineHandler;
 
 import com.aliyun.openservices.ons.api.Message;
-import com.finance.anubis.repository.OffLineTaskActivityRepository;
-import com.guming.fd.distributed.lock.DistributedLock;
-import com.guming.fd.distributed.lock.DistributedLockProvider;
-import com.finance.anubis.core.constants.Constants;
-import com.finance.anubis.core.constants.enums.OffLineAction;
-import com.finance.anubis.core.constants.enums.OffLineResourceType;
-import com.finance.anubis.core.constants.enums.SourceDataStatus;
-import com.finance.anubis.core.constants.enums.StatusResult;
 import com.finance.anubis.core.factory.PrepareDataExecutorFactory;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
+import com.finance.anubis.core.model.OffLineTaskActivity;
+import com.finance.anubis.enums.OffLineAction;
+import com.finance.anubis.enums.OffLineResourceType;
+import com.finance.anubis.enums.SourceDataStatus;
+import com.finance.anubis.enums.StatusResult;
+import com.finance.anubis.mq.MessageProducer;
+import com.finance.anubis.redis.RedisDistributedLock;
+import com.finance.anubis.repository.OffLineTaskActivityRepository;
 import com.finance.anubis.repository.mq.OffLineActionMqBody;
-import com.guming.mq.api.MessageProducer;
-import com.guming.mq.base.MessageBuilder;
+import com.finance.anubis.utils.JsonUtil;
 import lombok.CustomLog;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import static com.finance.anubis.core.constants.enums.OffLineAction.DATA_COMPARE_TOTAL;
-import static com.finance.anubis.core.constants.enums.SourceDataStatus.DATA_READY;
+import static com.finance.anubis.constants.Constants.TASK_ACTIVITY_ACTION_TOPIC;
+import static com.finance.anubis.enums.OffLineAction.DATA_COMPARE_TOTAL;
+import static com.finance.anubis.enums.SourceDataStatus.DATA_READY;
+
 
 /**
  * action 执行器
  */
-@CustomLog
 @Component
 public class DataFetchActionHandler extends OffLineActionHandler {
 
@@ -37,15 +36,16 @@ public class DataFetchActionHandler extends OffLineActionHandler {
 
     private final PrepareDataExecutorFactory dataExecutorFactory;
 
-    private final DistributedLockProvider distributedLockProvider;
+    //分布式锁
+    private RedisDistributedLock redisDistributedLock;
 
     public DataFetchActionHandler(OffLineTaskActivityRepository taskActivityRepository, MessageProducer messageProducer,
-                                  PrepareDataExecutorFactory dataExecutorFactory, DistributedLockProvider distributedLockProvider) {
+                                  PrepareDataExecutorFactory dataExecutorFactory, RedisDistributedLock redisDistributedLock) {
         super(OffLineAction.DATA_FETCH);
         this.activityRepository = taskActivityRepository;
         this.messageProducer = messageProducer;
         this.dataExecutorFactory = dataExecutorFactory;
-        this.distributedLockProvider = distributedLockProvider;
+        this.redisDistributedLock = redisDistributedLock;
     }
 
 
@@ -79,16 +79,16 @@ public class DataFetchActionHandler extends OffLineActionHandler {
 
     @Override
     protected void updateActivity(OffLineTaskActivity taskActivity, String key) {
-        DistributedLock distributedLock = distributedLockProvider.getOrCreate(taskActivity.getBizKey());
+        //分布式锁保证并发情况下只更新context中自己对应的部分
         try {
-            //分布式锁保证并发情况下只更新context中自己对应的部分
-            distributedLock.tryApplyWithinLockScopeInterruptibly(1, TimeUnit.SECONDS, () -> {
+            redisDistributedLock.tryApplyWithinLockScopeInterruptibly(1, TimeUnit.SECONDS, () -> {
                 OffLineTaskActivity activity = activityRepository.getByBizKey(taskActivity.getBizKey());
                 activity.getContext().getSourceContext().put(key, taskActivity.getSourceContext(key));
                 activityRepository.updateContext(activity.getId(), activity.getContext());
             });
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Interrupted while trying to apply lock.", e);
         }
         //判断双方对账数据是否全部就绪(并发情况下因分布式锁影响只有后者会更新Action)
         OffLineTaskActivity activity = activityRepository.getByBizKey(taskActivity.getBizKey());
@@ -106,12 +106,7 @@ public class DataFetchActionHandler extends OffLineActionHandler {
     protected void afterHandle(OffLineTaskActivity taskActivity, String key) {
         if (taskActivity.getAction().equals(DATA_COMPARE_TOTAL)) {
             OffLineActionMqBody dto = new OffLineActionMqBody(taskActivity.getBizKey(), key);
-            Message message = MessageBuilder.create()
-                    .topic(Constants.ANUBIS_MQ_TASK_ACTIVITY_ACTION_TOPIC)
-                    .tag(DATA_COMPARE_TOTAL.getCode())
-                    .body(dto)
-                    .build();
-            messageProducer.syncSend(message);
+            messageProducer.syncSend(TASK_ACTIVITY_ACTION_TOPIC, DATA_COMPARE_TOTAL.getCode(), JsonUtil.toJson(dto));
         }
     }
 

@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.finance.anubis</groupId>
         <artifactId>anubis</artifactId>
-        <version>${revision}</version>
+        <version>0.0.2-RELEASE</version>
     </parent>
 
     <artifactId>anubis-domain</artifactId>
@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.finance.anubis</groupId>
-            <artifactId>anubis-client</artifactId>
+            <artifactId>anubis-common</artifactId>
         </dependency>
     </dependencies>
 </project>

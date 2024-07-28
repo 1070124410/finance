@@ -1,14 +1,14 @@
 package com.finance.anubis.core.task.executor;
 
-import com.finance.anubis.core.constants.enums.OffLineResourceType;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
+import com.finance.anubis.core.model.OffLineTaskActivity;
 import com.finance.anubis.core.util.ExternalSortUtil;
 import com.finance.anubis.core.util.FileUtil;
-import com.finance.anubis.exception.ErrorMsg;
-import com.guming.api.json.JsonUtil;
-import com.guming.api.pojo.Status;
-import com.guming.common.exception.StatusCodeException;
 import com.finance.anubis.core.util.OSSUtil;
+import com.finance.anubis.enums.OffLineResourceType;
+import com.finance.anubis.exception.ErrorMsg;
+import com.finance.anubis.exception.Status;
+import com.finance.anubis.exception.StatusCodeException;
+import com.finance.anubis.utils.JsonUtil;
 import lombok.CustomLog;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ import java.math.BigInteger;
 import java.util.Collections;
 import java.util.Comparator;
 
-import static com.finance.anubis.core.constants.Constants.LocalFile.RECONCILIATION_FILE;
+import static com.finance.anubis.constants.Constants.LocalFile.RECONCILIATION_FILE;
 
 /**
  * @Author yezhaoyang
@@ -28,7 +28,6 @@ import static com.finance.anubis.core.constants.Constants.LocalFile.RECONCILIATI
  * @Description
  **/
 @Component
-@CustomLog
 public abstract class PrepareDataTemplate {
 
     @Getter

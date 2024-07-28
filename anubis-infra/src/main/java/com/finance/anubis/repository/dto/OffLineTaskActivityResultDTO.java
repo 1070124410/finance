@@ -1,8 +1,8 @@
 package com.finance.anubis.repository.dto;
 
-import com.finance.anubis.core.task.model.OffLineActivityResult;
+import com.finance.anubis.model.OffLineActivityResult;
 import com.finance.anubis.repository.entity.OffLineTaskActivityResultEntity;
-import com.guming.api.json.JsonUtil;
+import com.finance.anubis.utils.JsonUtil;
 
 /**
  * @Author yezhaoyang

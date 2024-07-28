@@ -1,10 +1,10 @@
 package com.finance.anubis.adapter;
 
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
-import com.finance.anubis.req.TaskActivityReq;
-import com.finance.anubis.res.OffLineTaskActivityRes;
-import com.guming.api.json.JsonUtil;
-import com.finance.anubis.core.constants.enums.OffLineAction;
+import com.finance.anubis.core.model.OffLineTaskActivity;
+import com.finance.anubis.enums.OffLineAction;
+import com.finance.anubis.request.TaskActivityReq;
+import com.finance.anubis.response.OffLineTaskActivityRes;
+import com.finance.anubis.utils.JsonUtil;
 
 /**
  * @Author yezhaoyang

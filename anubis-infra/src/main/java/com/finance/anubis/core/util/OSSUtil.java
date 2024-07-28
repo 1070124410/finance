@@ -7,6 +7,8 @@ import com.aliyun.oss.model.OSSObject;
 import com.finance.anubis.core.config.OSSProperties;
 import lombok.CustomLog;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -26,9 +28,8 @@ import java.util.Optional;
  * @time: 6/17/21 11:17 AM
  */
 @Component
-@CustomLog
 public class OSSUtil {
-
+    public final static Logger log = LoggerFactory.getLogger(OSSUtil.class);
     private static final String SLANT = "/";
     private OSSClientBuilder builder = new OSSClientBuilder();
     private OSS oss;

@@ -1,21 +1,22 @@
 package com.finance.anubis.core.task.executor;
 
-import com.finance.anubis.core.constants.Constants;
-import com.finance.anubis.core.constants.enums.FileType;
-import com.finance.anubis.core.constants.enums.OffLineResourceType;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
-import com.finance.anubis.core.util.ExternalSortUtil;
-import com.finance.anubis.core.util.FileUtil;
-import com.finance.anubis.exception.ErrorMsg;
-import com.guming.api.json.JsonUtil;
-import com.guming.api.pojo.Status;
-import com.guming.common.exception.StatusCodeException;
-import com.finance.anubis.core.config.OffLineFileResourceConfig;
+import com.finance.anubis.config.OffLineFileResourceConfig;
+import com.finance.anubis.constants.Constants;
 import com.finance.anubis.core.context.OffLineActivityContext;
 import com.finance.anubis.core.factory.FileParserUtilFactory;
+import com.finance.anubis.core.model.OffLineTaskActivity;
+import com.finance.anubis.core.util.ExternalSortUtil;
+import com.finance.anubis.core.util.FileUtil;
 import com.finance.anubis.core.util.OSSUtil;
-import lombok.CustomLog;
+import com.finance.anubis.enums.FileType;
+import com.finance.anubis.enums.OffLineResourceType;
+import com.finance.anubis.exception.ErrorMsg;
+import com.finance.anubis.exception.Status;
+import com.finance.anubis.exception.StatusCodeException;
+import com.finance.anubis.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
@@ -30,10 +31,9 @@ import java.util.stream.Collectors;
  * @Date 2023/03/06 11:03
  * @Description 通过文件获取对账数据
  **/
-@CustomLog
 @Component
 public class FileFetchExecutor extends PrepareDataTemplate {
-
+    public final static Logger log= LoggerFactory.getLogger(FileFetchExecutor.class);
     private final FileUtil fileUtil;
 
     private final Integer batchSize = 10000;

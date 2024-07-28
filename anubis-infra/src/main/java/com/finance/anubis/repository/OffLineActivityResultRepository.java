@@ -1,6 +1,6 @@
 package com.finance.anubis.repository;
 
-import com.finance.anubis.core.task.model.OffLineActivityResult;
+import com.finance.anubis.model.OffLineActivityResult;
 
 import java.util.List;
 

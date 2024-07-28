@@ -1,10 +1,11 @@
 package com.finance.anubis.repository.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.finance.anubis.core.constants.enums.TaskStatus;
-import com.finance.anubis.core.constants.enums.TaskType;
-import com.finance.anubis.core.task.model.Task;
+import com.finance.anubis.core.model.Task;
+import com.finance.anubis.enums.TaskStatus;
+import com.finance.anubis.enums.TaskType;
 import com.finance.anubis.exception.StatusCodeEnum;
+import com.finance.anubis.exception.StatusCodeException;
 import com.finance.anubis.repository.TaskRepository;
 import com.finance.anubis.repository.dto.TaskConfigDTO;
 import com.finance.anubis.repository.dto.TaskDTO;
@@ -12,8 +13,6 @@ import com.finance.anubis.repository.entity.TaskConfigEntity;
 import com.finance.anubis.repository.entity.TaskEntity;
 import com.finance.anubis.repository.mapper.TaskConfigMapper;
 import com.finance.anubis.repository.mapper.TaskMapper;
-import com.guming.api.pojo.page.Limit;
-import com.guming.common.exception.StatusCodeException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DuplicateKeyException;
@@ -55,27 +54,6 @@ public class TaskRepositoryImpl implements TaskRepository {
         }
 
         return TaskDTO.toModel(taskEntity, taskConfigEntity);
-    }
-
-    @Override
-    public List<Task> selectTaskPage(Limit page, Task task) {
-        if (null == task) {
-            return Collections.emptyList();
-        }
-        List<TaskEntity> taskEntities = taskMapper.selectPagesByParams(page.getOffset(), page.getSize(), TaskDTO.toEntity(task));
-        if (CollUtil.isEmpty(taskEntities)) {
-            return Collections.emptyList();
-        }
-        List<Long> taskConfigIds = taskEntities.stream().map(TaskEntity::getTaskConfigId).collect(Collectors.toList());
-
-        List<TaskConfigEntity> taskConfigEntities = selectConfigListByIds(taskConfigIds);
-        if (taskConfigEntities.size() != taskConfigIds.size()) {
-            log.error("#selectTaskPage,config lack,configIds:{}", taskConfigIds);
-            throw new RuntimeException();
-        }
-        Map<Long, TaskConfigEntity> configEntityMap = taskConfigEntities.stream().collect(Collectors.toMap(TaskConfigEntity::getId, e -> e));
-
-        return taskEntities.stream().map(e -> TaskDTO.toModel(e, configEntityMap.get(e.getTaskConfigId()))).collect(Collectors.toList());
     }
 
     @Override

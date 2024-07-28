@@ -1,7 +1,7 @@
 package com.finance.anubis.repository.dto;
 
-import com.finance.anubis.core.constants.enums.TaskType;
-import com.finance.anubis.core.task.model.Task;
+import com.finance.anubis.core.model.Task;
+import com.finance.anubis.enums.TaskType;
 import com.finance.anubis.repository.entity.TaskConfigEntity;
 import com.finance.anubis.repository.entity.TaskEntity;
 

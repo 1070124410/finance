@@ -1,26 +1,26 @@
 package com.finance.anubis.core.task.stage.offlineHandler;
 
 import com.aliyun.openservices.ons.api.Message;
-import com.finance.anubis.core.constants.Constants;
-import com.finance.anubis.core.constants.enums.OffLineAction;
-import com.finance.anubis.core.constants.enums.StatusResult;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
+import com.finance.anubis.core.model.OffLineTaskActivity;
 import com.finance.anubis.core.util.FileUtil;
 import com.finance.anubis.dto.OffLineTaskActivityResultDTO;
 import com.finance.anubis.dto.OffLineTaskDetailResultDTO;
 import com.finance.anubis.dto.OffLineTaskTotalResultDTO;
+import com.finance.anubis.enums.OffLineAction;
+import com.finance.anubis.enums.StatusResult;
 import com.finance.anubis.mq.MessageProducer;
 import com.finance.anubis.repository.OffLineActivityResultRepository;
 import com.finance.anubis.repository.OffLineTaskActivityRepository;
-import com.guming.mq.base.MessageBuilder;
+import com.finance.anubis.utils.JsonUtil;
 import lombok.CustomLog;
 import org.springframework.stereotype.Component;
 
 import static com.finance.anubis.adapter.OffLineActivityResultAdapter.adapt2OffLineTaskDetailResultDTO;
 import static com.finance.anubis.adapter.OffLineActivityResultAdapter.adapt2OffLineTaskTotalResultDTO;
+import static com.finance.anubis.constants.Constants.TASK_ACTIVITY_ACTION_TOPIC;
+import static com.finance.anubis.constants.Constants.UNDERLINE_SPLIE;
 
 
-@CustomLog
 @Component
 public class DataDoneActionHandler extends OffLineActionHandler {
 
@@ -79,11 +79,8 @@ public class DataDoneActionHandler extends OffLineActionHandler {
 
         OffLineTaskActivityResultDTO msg = new OffLineTaskActivityResultDTO(totalResult, detailResult,
                 taskActivity.getSourceContext(sourceKey).getCustom(), taskActivity.getSourceContext(targetKey).getCustom());
-        Message message = MessageBuilder.create().topic(Constants.ANUBIS_MQ_TASK_ACTIVITY_ACTION_TOPIC)
-                .tag(taskActivity.getTaskConfig().getName() + Constants.UNDERLINE_SPLIE + OffLineAction.DATA_DONE.getCode())
-                .body(msg)
-                .build();
-        messageProducer.syncSend(message);
+        String tag = taskActivity.getTaskConfig().getName() + UNDERLINE_SPLIE + OffLineAction.DATA_DONE.getCode();
+        messageProducer.syncSend(TASK_ACTIVITY_ACTION_TOPIC, tag, JsonUtil.toJson(msg));
     }
 
 

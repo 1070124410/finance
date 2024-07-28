@@ -1,8 +1,8 @@
 package com.finance.anubis.repository.dto;
 
-import com.finance.anubis.core.task.model.TaskActivityResult;
+import com.finance.anubis.model.TaskActivityResult;
 import com.finance.anubis.repository.entity.TaskActivityResultEntity;
-import com.guming.api.json.JsonUtil;
+import com.finance.anubis.utils.JsonUtil;
 
 /**
  * @Author yezhaoyang

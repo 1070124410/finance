@@ -1,13 +1,13 @@
 package com.finance.anubis.adapter;
 
-import com.finance.anubis.core.config.TaskConfig;
-import com.finance.anubis.core.constants.enums.TaskStatus;
-import com.finance.anubis.core.constants.enums.TaskType;
-import com.finance.anubis.core.task.model.Task;
+import com.finance.anubis.config.TaskConfig;
+import com.finance.anubis.core.model.Task;
+import com.finance.anubis.enums.TaskStatus;
+import com.finance.anubis.enums.TaskType;
 import com.finance.anubis.repository.entity.TaskEntity;
-import com.finance.anubis.req.TaskReq;
-import com.finance.anubis.res.TaskRes;
-import com.guming.api.json.JsonUtil;
+import com.finance.anubis.request.TaskReq;
+import com.finance.anubis.response.TaskRes;
+import com.finance.anubis.utils.JsonUtil;
 
 /**
  * @Author yezhaoyang
@@ -22,7 +22,7 @@ public class TaskAdapter {
         task.setTaskType(TaskType.of(type));
         if (taskReq.getConfig() != null) {
             String configJson = JsonUtil.toJson(taskReq.getConfig());
-            task.setTaskConfig(JsonUtil.of(configJson, TaskConfig.class));
+            task.setTaskConfig(JsonUtil.string2Obj(configJson, TaskConfig.class));
         }
         task.setStatus(TaskStatus.of(taskReq.getStatus()));
         task.setId(taskReq.getId());

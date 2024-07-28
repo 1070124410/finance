@@ -1,7 +1,7 @@
 package com.finance.anubis.service;
 
-import com.finance.anubis.req.TaskReq;
-import com.finance.anubis.res.TaskRes;
+import com.finance.anubis.request.TaskReq;
+import com.finance.anubis.response.TaskRes;
 
 import java.util.List;
 
@@ -19,14 +19,6 @@ public interface TaskService {
      * @return
      */
     TaskRes selectById(Long id);
-
-    /**
-     * 分页查询任务列表
-     *
-     * @param task
-     * @return
-     */
-    List<TaskRes> selectTaskPage(TaskReq task);
 
     /**
      * 根据任务条件查询任务

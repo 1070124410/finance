@@ -1,9 +1,8 @@
 package com.finance.anubis.repository;
 
-import com.guming.api.pojo.page.Limit;
-import com.finance.anubis.core.constants.enums.OffLineAction;
 import com.finance.anubis.core.context.OffLineActivityContext;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
+import com.finance.anubis.core.model.OffLineTaskActivity;
+import com.finance.anubis.enums.OffLineAction;
 
 import java.util.List;
 
@@ -86,11 +85,4 @@ public interface OffLineTaskActivityRepository {
      */
     List<OffLineTaskActivity> getByParams(OffLineTaskActivity activity);
 
-    /**
-     * 根据参数分页查询
-     * @param limit
-     * @param activity
-     * @return
-     */
-    List<OffLineTaskActivity> getPageByParams(Limit limit, OffLineTaskActivity activity);
 }

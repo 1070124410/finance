@@ -1,27 +1,26 @@
 package com.finance.anubis.service.impl;
 
-import cn.hutool.json.JSONUtil;
-import com.aliyun.openservices.ons.api.Message;
+import com.finance.anubis.config.OffLineTaskConfig;
+import com.finance.anubis.core.model.OffLineTaskActivity;
+import com.finance.anubis.core.model.Task;
+import com.finance.anubis.dto.OffLineDataReadyDTO;
+import com.finance.anubis.enums.OffLineAction;
+import com.finance.anubis.mq.MessageProducer;
+import com.finance.anubis.redis.RedisDistributedLock;
 import com.finance.anubis.repository.OffLineTaskActivityRepository;
 import com.finance.anubis.repository.TaskRepository;
-import com.guming.fd.distributed.lock.DistributedLock;
-import com.guming.fd.distributed.lock.DistributedLockProvider;
-import com.finance.anubis.core.config.OffLineTaskConfig;
-import com.finance.anubis.core.constants.Constants;
-import com.finance.anubis.core.constants.enums.OffLineAction;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
-import com.finance.anubis.core.task.model.Task;
-import com.finance.anubis.dto.OffLineDataReadyDTO;
 import com.finance.anubis.repository.mq.OffLineActionMqBody;
 import com.finance.anubis.service.OffLineTaskService;
-import com.guming.mq.api.MessageProducer;
-import com.guming.mq.base.MessageBuilder;
-import lombok.CustomLog;
+import com.finance.anubis.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
+
+import static com.finance.anubis.constants.Constants.TASK_ACTIVITY_ACTION_TOPIC;
 
 /**
  * @Author yezhaoyang
@@ -29,19 +28,18 @@ import java.util.concurrent.TimeUnit;
  * @Description
  **/
 @Service
-@CustomLog
 public class OffLineTaskServiceImpl implements OffLineTaskService {
-
+    public final static Logger log = LoggerFactory.getLogger(OffLineTaskServiceImpl.class);
     private final TaskRepository taskRepository;
 
     private final MessageProducer messageProducer;
 
     private final OffLineTaskActivityRepository taskActivityRepository;
 
-    private final DistributedLockProvider distributedLockProvider;
+    private final RedisDistributedLock distributedLockProvider;
 
 
-    public OffLineTaskServiceImpl(TaskRepository taskRepository, MessageProducer messageProducer, OffLineTaskActivityRepository taskActivityRepository, DistributedLockProvider distributedLockProvider) {
+    public OffLineTaskServiceImpl(TaskRepository taskRepository, MessageProducer messageProducer, OffLineTaskActivityRepository taskActivityRepository, RedisDistributedLock distributedLockProvider) {
         this.taskRepository = taskRepository;
         this.messageProducer = messageProducer;
         this.taskActivityRepository = taskActivityRepository;
@@ -72,24 +70,19 @@ public class OffLineTaskServiceImpl implements OffLineTaskService {
         }
         taskActivity.initRequestParam(dto.getConfigKey(), dto.getRequestParam(), dto.getCustom());
         taskActivity.setVerifyDate(dto.getVerifyDate());
-        DistributedLock distributedLock = distributedLockProvider.getOrCreate(taskActivity.getBizKey());
         try {
-            //分布式锁保证并发情况下只更新context中自己对应的部分
             OffLineTaskActivity finalTaskActivity = taskActivity;
-            distributedLock.tryApplyWithinLockScopeInterruptibly(1, TimeUnit.SECONDS, () -> {
+            distributedLockProvider.tryApplyWithinLockScopeInterruptibly(1, TimeUnit.SECONDS, () -> {
                 taskActivityRepository.toDataFetch(finalTaskActivity.getId(), finalTaskActivity.getContext(), finalTaskActivity.getAction());
+
             });
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Interrupted while trying to apply lock.", e);
         }
         OffLineActionMqBody offLineActionMqBody = new OffLineActionMqBody(bizKey, dto.getConfigKey());
 
-        Message message = MessageBuilder.create()
-                .topic(Constants.ANUBIS_MQ_TASK_ACTIVITY_ACTION_TOPIC)
-                .tag(OffLineAction.DATA_FETCH.getCode())
-                .body(JSONUtil.parse(offLineActionMqBody))
-                .build();
-        messageProducer.syncSend(message);
+        messageProducer.syncSend(TASK_ACTIVITY_ACTION_TOPIC, OffLineAction.DATA_FETCH.getCode(), JsonUtil.toJson(offLineActionMqBody));
         return true;
     }
 }

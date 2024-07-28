@@ -1,22 +1,19 @@
 package com.finance.anubis.core.task.stage.offlineHandler;
 
-import com.aliyun.openservices.ons.api.Message;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
+import com.finance.anubis.core.model.OffLineTaskActivity;
+import com.finance.anubis.core.util.FileUtil;
+import com.finance.anubis.core.util.OSSUtil;
+import com.finance.anubis.enums.OffLineAction;
+import com.finance.anubis.enums.StatusResult;
 import com.finance.anubis.exception.ErrorMsg;
+import com.finance.anubis.exception.Status;
+import com.finance.anubis.exception.StatusCodeException;
+import com.finance.anubis.model.OffLineActivityResult;
+import com.finance.anubis.mq.MessageProducer;
 import com.finance.anubis.repository.OffLineActivityResultRepository;
 import com.finance.anubis.repository.OffLineTaskActivityRepository;
 import com.finance.anubis.repository.mq.OffLineActionMqBody;
-import com.guming.api.json.JsonUtil;
-import com.guming.api.pojo.Status;
-import com.guming.common.exception.StatusCodeException;
-import com.finance.anubis.core.constants.Constants;
-import com.finance.anubis.core.constants.enums.OffLineAction;
-import com.finance.anubis.core.constants.enums.StatusResult;
-import com.finance.anubis.core.task.model.OffLineActivityResult;
-import com.finance.anubis.core.util.FileUtil;
-import com.finance.anubis.core.util.OSSUtil;
-import com.guming.mq.api.MessageProducer;
-import com.guming.mq.base.MessageBuilder;
+import com.finance.anubis.utils.JsonUtil;
 import lombok.CustomLog;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -25,11 +22,11 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Optional;
 
-import static com.finance.anubis.core.constants.Constants.LocalFile.OSS_COMPARE_FILE;
-import static com.finance.anubis.core.constants.enums.OffLineAction.DATA_DONE;
+import static com.finance.anubis.constants.Constants.LocalFile.OSS_COMPARE_FILE;
+import static com.finance.anubis.constants.Constants.TASK_ACTIVITY_ACTION_TOPIC;
+import static com.finance.anubis.enums.OffLineAction.DATA_DONE;
 
 
-@CustomLog
 @Component
 public class DataCompareDetailActionHandler extends OffLineActionHandler {
     private final OffLineTaskActivityRepository taskActivityRepository;
@@ -91,7 +88,7 @@ public class DataCompareDetailActionHandler extends OffLineActionHandler {
             if (e instanceof StatusCodeException) {
                 throw new StatusCodeException(((StatusCodeException) e).getStatusCode());
             }
-            ErrorMsg msg = new ErrorMsg(taskActivity.getBizKey(), null, OffLineAction.DATA_COMPARE_DETAIL, "oss对账文件下载失败");
+            ErrorMsg msg = new ErrorMsg(taskActivity.getBizKey(), null, OffLineAction.DATA_COMPARE_DETAIL, "oss download fail");
             throw new StatusCodeException(Status.error(JsonUtil.toJson(msg)));
         }
     }
@@ -104,10 +101,6 @@ public class DataCompareDetailActionHandler extends OffLineActionHandler {
     @Override
     protected void afterHandle(OffLineTaskActivity taskActivity, String key) {
         OffLineActionMqBody msgBody = new OffLineActionMqBody(taskActivity.getBizKey(), key);
-        Message message = MessageBuilder.create().topic(Constants.ANUBIS_MQ_TASK_ACTIVITY_ACTION_TOPIC)
-                .tag(DATA_DONE.getCode())
-                .body(msgBody)
-                .build();
-        messageProducer.syncSend(message);
+        messageProducer.syncSend(TASK_ACTIVITY_ACTION_TOPIC, DATA_DONE.getCode(), JsonUtil.toJson(msgBody));
     }
 }

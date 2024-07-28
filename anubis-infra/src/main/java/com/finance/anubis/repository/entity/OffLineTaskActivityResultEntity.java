@@ -1,7 +1,7 @@
 package com.finance.anubis.repository.entity;
 
-import com.finance.anubis.core.constants.enums.ActionResult;
-import com.finance.anubis.core.constants.enums.OffLineActivityResultType;
+import com.finance.anubis.enums.ActionResult;
+import com.finance.anubis.enums.OffLineActivityResultType;
 import lombok.Data;
 
 import java.io.Serializable;

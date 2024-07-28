@@ -7,10 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author: linjuanjuan
- * @time: 4/22/22 10:18 AM
- */
+
 @Data
 @Configuration
 @ConditionalOnExpression("!'${ding.webhook}'.isEmpty()")

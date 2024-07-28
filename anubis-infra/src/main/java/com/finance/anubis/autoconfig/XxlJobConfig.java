@@ -9,10 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author: linjuanjuan
- * @time: 6/7/21 9:41 AM
- */
+
 @Configuration
 @ConditionalOnProperty(name = "xxl.job.open", havingValue = "true")
 @Data

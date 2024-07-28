@@ -1,20 +1,18 @@
 package com.finance.anubis.repository.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.finance.anubis.core.constants.enums.OffLineAction;
 import com.finance.anubis.core.context.OffLineActivityContext;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
+import com.finance.anubis.core.model.OffLineTaskActivity;
+import com.finance.anubis.enums.OffLineAction;
 import com.finance.anubis.exception.StatusCodeEnum;
+import com.finance.anubis.exception.StatusCodeException;
 import com.finance.anubis.repository.OffLineTaskActivityRepository;
 import com.finance.anubis.repository.dto.TaskActivityDTO;
 import com.finance.anubis.repository.entity.TaskActivityEntity;
 import com.finance.anubis.repository.entity.TaskConfigEntity;
 import com.finance.anubis.repository.mapper.OffLineTaskActivityMapper;
 import com.finance.anubis.repository.mapper.TaskConfigMapper;
-import com.guming.api.json.JsonUtil;
-import com.guming.api.pojo.page.Limit;
-import com.guming.common.exception.StatusCodeException;
-import lombok.CustomLog;
+import com.finance.anubis.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -27,7 +25,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
-@CustomLog
 public class OffLineTaskActivityRepositoryImpl implements OffLineTaskActivityRepository {
 
 
@@ -250,22 +247,4 @@ public class OffLineTaskActivityRepositoryImpl implements OffLineTaskActivityRep
         return entities.stream().map(e -> TaskActivityDTO.toOffLineModel(e, configEntityMap.get(idMap.get(e.getId())))).collect(Collectors.toList());
     }
 
-    @Override
-    public List<OffLineTaskActivity> getPageByParams(Limit page, OffLineTaskActivity activity) {
-        if (null == activity) {
-            return Collections.emptyList();
-        }
-        TaskActivityEntity entity = new TaskActivityEntity();
-        entity.setOffLineAction(activity.getAction());
-        List<TaskActivityEntity> entities = taskActivityMapper.selectPageByParams(page.getOffset(), page.getSize(), entity);
-        if (entities.isEmpty()) {
-            return Collections.emptyList();
-        }
-        //key:taskActivityId value:taskConfigId
-        Map<Long, Long> idMap = entities.stream().collect(Collectors.toMap(TaskActivityEntity::getId, TaskActivityEntity::getTaskConfigId));
-        //key:taskConfigId value:taskConfig
-        Map<Long, TaskConfigEntity> configEntityMap = taskConfigMapper.selectListByIds(new ArrayList<>(idMap.values())).stream().collect(Collectors.toMap(TaskConfigEntity::getId, a -> a));
-
-        return entities.stream().map(e -> TaskActivityDTO.toOffLineModel(e, configEntityMap.get(idMap.get(e.getId())))).collect(Collectors.toList());
-    }
 }

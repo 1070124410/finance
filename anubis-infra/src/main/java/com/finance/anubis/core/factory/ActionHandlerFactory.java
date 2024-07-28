@@ -1,17 +1,18 @@
 package com.finance.anubis.core.factory;
 
-import com.finance.anubis.core.constants.enums.Action;
 import com.finance.anubis.core.task.stage.handler.ActionHandler;
+import com.finance.anubis.enums.Action;
 import lombok.CustomLog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
 import java.util.Map;
 
-@CustomLog
 @Component
 public class ActionHandlerFactory extends StageHandlerFactory {
-
+    public final static Logger log = LoggerFactory.getLogger(ActionHandlerFactory.class);
     private static final Map<Action, ActionHandler> STAGE_HANDLER_MAP = new EnumMap<>(Action.class);
 
     public ActionHandler getHandler(Action action) {

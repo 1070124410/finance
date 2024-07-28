@@ -1,14 +1,14 @@
 package com.finance.anubis.adapter;
 
-import com.finance.anubis.core.constants.enums.ActionResult;
-import com.finance.anubis.core.task.model.OffLineActivityResult;
 import com.finance.anubis.dto.OffLineTaskDetailResultDTO;
 import com.finance.anubis.dto.OffLineTaskTotalResultDTO;
+import com.finance.anubis.enums.ActionResult;
 import com.finance.anubis.enums.OffLineActivityResultType;
 import com.finance.anubis.enums.OffLineActivityVerifyResult;
-import com.finance.anubis.req.OffLineActivityResultReq;
-import com.finance.anubis.res.OffLineActivityResultRes;
-import com.guming.api.json.JsonUtil;
+import com.finance.anubis.model.OffLineActivityResult;
+import com.finance.anubis.request.OffLineActivityResultReq;
+import com.finance.anubis.response.OffLineActivityResultRes;
+import com.finance.anubis.utils.JsonUtil;
 
 /**
  * @Author yezhaoyang
@@ -21,7 +21,7 @@ public class OffLineActivityResultAdapter {
         OffLineActivityResult result = new OffLineActivityResult();
         result.setId(req.getId());
         result.setTaskActivityId(req.getTaskActivityId());
-        result.setResultType(com.finance.anubis.core.constants.enums.OffLineActivityResultType.of(req.getResultType()));
+        result.setResultType(OffLineActivityResultType.of(req.getResultType()));
         result.setVerifyResult(ActionResult.of(req.getVerifyResult()));
         result.setBizKey(req.getBizKey());
         return result;

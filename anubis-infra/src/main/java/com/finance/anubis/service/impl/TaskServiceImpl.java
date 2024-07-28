@@ -3,18 +3,17 @@ package com.finance.anubis.service.impl;
 import cn.hutool.extra.spring.SpringUtil;
 import com.aliyun.openservices.ons.api.ConsumeContext;
 import com.aliyun.openservices.ons.api.Message;
-import com.finance.anubis.exception.StatusCodeEnum;
-import com.finance.anubis.repository.TaskRepository;
-import com.finance.anubis.res.TaskRes;
-import com.guming.api.pojo.Status;
-import com.guming.api.pojo.page.Limit;
-import com.guming.common.exception.StatusCodeException;
 import com.finance.anubis.adapter.TaskAdapter;
-import com.finance.anubis.core.config.OnLineTaskConfig;
-import com.finance.anubis.core.constants.enums.TaskStatus;
-import com.finance.anubis.core.task.model.Task;
+import com.finance.anubis.config.OnLineTaskConfig;
+import com.finance.anubis.core.model.Task;
 import com.finance.anubis.core.task.runner.MQSourceRunner;
-import com.finance.anubis.req.TaskReq;
+import com.finance.anubis.enums.TaskStatus;
+import com.finance.anubis.exception.Status;
+import com.finance.anubis.exception.StatusCodeEnum;
+import com.finance.anubis.exception.StatusCodeException;
+import com.finance.anubis.repository.TaskRepository;
+import com.finance.anubis.request.TaskReq;
+import com.finance.anubis.response.TaskRes;
 import com.finance.anubis.service.TaskService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -45,20 +44,6 @@ public class TaskServiceImpl implements TaskService {
         try {
             Task task = taskRepository.selectById(id);
             return TaskAdapter.adapt2TaskRes(task);
-        } catch (Exception e) {
-            throw new StatusCodeException(Status.error(StatusCodeEnum.TaskNotComplete.getMessage()));
-        }
-    }
-
-    @Override
-    public List<TaskRes> selectTaskPage(TaskReq taskReq) {
-        if (null == taskReq) {
-            return Collections.emptyList();
-        }
-        try {
-            Limit limit = taskReq.getPage().getLimit();
-            List<Task> taskList = taskRepository.selectTaskPage(limit, TaskAdapter.adapt2Task(taskReq));
-            return taskList.stream().map(TaskAdapter::adapt2TaskRes).collect(Collectors.toList());
         } catch (Exception e) {
             throw new StatusCodeException(Status.error(StatusCodeEnum.TaskNotComplete.getMessage()));
         }

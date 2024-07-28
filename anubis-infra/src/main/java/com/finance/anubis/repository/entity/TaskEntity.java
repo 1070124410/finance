@@ -1,7 +1,7 @@
 package com.finance.anubis.repository.entity;
 
-import com.finance.anubis.core.constants.enums.TaskStatus;
-import com.finance.anubis.core.constants.enums.TaskType;
+import com.finance.anubis.enums.TaskStatus;
+import com.finance.anubis.enums.TaskType;
 import lombok.Data;
 
 import java.io.Serializable;

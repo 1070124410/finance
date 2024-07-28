@@ -2,6 +2,7 @@ package com.finance.anubis.core.config;
 
 import cn.hutool.core.map.MapUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.finance.anubis.utils.JsonUtil;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -19,10 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-/**
- * @author: linjuanjuan
- * @time: 6/5/21 3:07 PM
- */
+
 @Slf4j
 public class ProfileConfig {
 
@@ -70,6 +68,7 @@ public class ProfileConfig {
             return defaultValue;
         }
     }
+
     public static Set<String> getSet(String key) {
         return getSet(key, Sets.newHashSet());
     }
@@ -92,8 +91,7 @@ public class ProfileConfig {
     public static Map<String, String> getMap(String key) {
         Map<String, String> stringStringMap;
         try {
-            stringStringMap = JsonUtil.of(properties.getOrDefault(key, "{}"), new TypeReference<Map<String, String>>() {
-            });
+            stringStringMap = JsonUtil.ofMap(properties.getOrDefault(key, "{}"), String.class, String.class);
         } catch (Exception e) {
             log.warn("value装换程map失败，key={}", key);
             stringStringMap = Maps.newHashMap();

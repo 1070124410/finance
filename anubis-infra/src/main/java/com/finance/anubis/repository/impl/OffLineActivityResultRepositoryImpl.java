@@ -1,7 +1,7 @@
 package com.finance.anubis.repository.impl;
 
-import com.finance.anubis.core.constants.enums.OffLineActivityResultType;
-import com.finance.anubis.core.task.model.OffLineActivityResult;
+import com.finance.anubis.enums.OffLineActivityResultType;
+import com.finance.anubis.model.OffLineActivityResult;
 import com.finance.anubis.repository.OffLineActivityResultRepository;
 import com.finance.anubis.repository.entity.OffLineTaskActivityResultEntity;
 import com.finance.anubis.repository.mapper.OffLineTaskActivityResultMapper;

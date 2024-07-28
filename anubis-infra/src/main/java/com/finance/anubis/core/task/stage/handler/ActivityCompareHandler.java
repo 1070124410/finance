@@ -1,19 +1,18 @@
 package com.finance.anubis.core.task.stage.handler;
 
 import cn.hutool.json.JSONUtil;
-import com.aliyun.openservices.ons.api.Message;
+import com.finance.anubis.core.model.TaskActivity;
+import com.finance.anubis.enums.Action;
+import com.finance.anubis.mq.MessageProducer;
 import com.finance.anubis.repository.ActivityResultRepository;
 import com.finance.anubis.repository.TaskActivityRepository;
-import com.finance.anubis.core.constants.Constants;
-import com.finance.anubis.core.constants.enums.Action;
-import com.finance.anubis.core.task.model.TaskActivity;
-import com.guming.mq.api.MessageProducer;
-import com.guming.mq.base.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+
+import static com.finance.anubis.constants.Constants.TASK_ACTIVITY_ACTION_TOPIC;
 
 /**
  * 比较action执行器
@@ -47,11 +46,6 @@ public class ActivityCompareHandler extends ActionHandler {
                 .append(splitCharacter)
                 .append(taskActivity.getAction().name())
                 .toString();
-        Message message = MessageBuilder.create()
-                .topic(Constants.ANUBIS_MQ_TASK_ACTIVITY_ACTION_TOPIC)
-                .tag(tag)
-                .body(JSONUtil.parse(taskActivity.getResult()))
-                .build();
-        messageProducer.syncSend(message);
+        messageProducer.syncSend(TASK_ACTIVITY_ACTION_TOPIC, tag, JSONUtil.toJsonStr(taskActivity.getResult()));
     }
 }

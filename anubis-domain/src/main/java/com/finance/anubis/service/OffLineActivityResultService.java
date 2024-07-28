@@ -1,7 +1,7 @@
 package com.finance.anubis.service;
 
-import com.finance.anubis.req.OffLineActivityResultReq;
-import com.finance.anubis.res.OffLineActivityResultRes;
+import com.finance.anubis.request.OffLineActivityResultReq;
+import com.finance.anubis.response.OffLineActivityResultRes;
 
 /**
  * @Author yezhaoyang

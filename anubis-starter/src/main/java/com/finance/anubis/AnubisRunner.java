@@ -1,7 +1,7 @@
 package com.finance.anubis;
 
 import com.finance.anubis.core.TaskInitializer;
-import com.finance.anubis.core.task.model.Task;
+import com.finance.anubis.core.model.Task;
 import com.finance.anubis.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;

@@ -1,10 +1,11 @@
 package com.finance.anubis.repository.handler;
 
-import com.finance.anubis.core.constants.enums.*;
-import lombok.CustomLog;
+import com.finance.anubis.enums.*;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,10 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@CustomLog
 @MappedTypes(value = {Action.class, ActionResult.class, MessageInfraType.class, ResourceType.class, TaskStatus.class, TaskType.class})
 public class BaseEnumTypeHandler<E extends Enum<E>> extends BaseTypeHandler<E> {
-
+    public final static Logger log = LoggerFactory.getLogger(BaseEnumTypeHandler.class);
     private Class<E> type;
 
     public BaseEnumTypeHandler() {

@@ -1,17 +1,17 @@
 package com.finance.anubis.core.factory;
 
-import com.finance.anubis.core.constants.enums.OffLineResourceType;
 import com.finance.anubis.core.task.executor.PrepareDataTemplate;
-import lombok.CustomLog;
+import com.finance.anubis.enums.OffLineResourceType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
 import java.util.Map;
 
 @Component
-@CustomLog
 public class PrepareDataExecutorFactory extends StageHandlerFactory {
-
+    public final static Logger log = LoggerFactory.getLogger(PrepareDataExecutorFactory.class);
     private static final Map<OffLineResourceType, PrepareDataTemplate> PREPARE_DATA_EXECUTOR_MAP = new EnumMap<>(OffLineResourceType.class);
 
     public PrepareDataTemplate getPrepareDataExecutor(OffLineResourceType type) {

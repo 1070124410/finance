@@ -1,7 +1,7 @@
 package com.finance.anubis.repository.mapper;
 
-import com.finance.anubis.core.constants.enums.TaskStatus;
-import com.finance.anubis.core.constants.enums.TaskType;
+import com.finance.anubis.enums.TaskStatus;
+import com.finance.anubis.enums.TaskType;
 import com.finance.anubis.repository.entity.TaskEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

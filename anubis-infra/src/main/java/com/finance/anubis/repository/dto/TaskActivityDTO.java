@@ -1,14 +1,14 @@
 package com.finance.anubis.repository.dto;
 
-import com.guming.api.json.JsonUtil;
-import com.finance.anubis.core.config.OffLineTaskConfig;
-import com.finance.anubis.core.config.OnLineTaskConfig;
+import com.finance.anubis.config.OffLineTaskConfig;
+import com.finance.anubis.config.OnLineTaskConfig;
 import com.finance.anubis.core.context.ActivityContext;
 import com.finance.anubis.core.context.OffLineActivityContext;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
-import com.finance.anubis.core.task.model.TaskActivity;
+import com.finance.anubis.core.model.OffLineTaskActivity;
+import com.finance.anubis.core.model.TaskActivity;
 import com.finance.anubis.repository.entity.TaskActivityEntity;
 import com.finance.anubis.repository.entity.TaskConfigEntity;
+import com.finance.anubis.utils.JsonUtil;
 
 public class TaskActivityDTO {
     public static TaskActivityEntity toEntity(TaskActivity taskActivity) {
@@ -27,7 +27,7 @@ public class TaskActivityDTO {
     public static TaskActivity toModel(TaskActivityEntity taskActivityEntity, TaskConfigEntity taskConfigEntity) {
         TaskActivity taskActivity = new TaskActivity();
         String context = taskActivityEntity.getContext();
-        taskActivity.setContext(JsonUtil.of(context, ActivityContext.class));
+        taskActivity.setContext(JsonUtil.string2Obj(context, ActivityContext.class));
         taskActivity.setAction(taskActivityEntity.getAction() == null ? null : taskActivityEntity.getAction());
         taskActivity.setId(taskActivityEntity.getId());
         taskActivity.setTimes(taskActivityEntity.getTimes());

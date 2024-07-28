@@ -2,8 +2,8 @@ package com.finance.anubis.core.context;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.finance.anubis.core.constants.enums.OffLineResourceType;
-import com.finance.anubis.core.constants.enums.SourceDataStatus;
+import com.finance.anubis.enums.OffLineResourceType;
+import com.finance.anubis.enums.SourceDataStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

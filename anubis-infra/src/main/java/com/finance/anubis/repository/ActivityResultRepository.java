@@ -1,7 +1,6 @@
 package com.finance.anubis.repository;
 
-import com.guming.api.pojo.page.Limit;
-import com.finance.anubis.core.task.model.TaskActivityResult;
+import com.finance.anubis.model.TaskActivityResult;
 
 import java.util.List;
 
@@ -31,14 +30,6 @@ public interface ActivityResultRepository {
      */
     List<TaskActivityResult> selectByParams(TaskActivityResult taskActivityResult);
 
-    /**
-     * 分页带参查询
-     *
-     * @param page
-     * @param taskActivityResult
-     * @return
-     */
-    List<TaskActivityResult> selectPageByParams(Limit page, TaskActivityResult taskActivityResult);
 
     /**
      * 根据唯一信息查询最新结果

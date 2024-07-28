@@ -1,10 +1,12 @@
 package com.finance.anubis.core.util;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
+import com.finance.anubis.core.model.OffLineTaskActivity;
 import com.finance.anubis.core.util.math.InToPost;
 import com.finance.anubis.core.util.math.ParsePost;
 import lombok.CustomLog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -12,12 +14,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 
-import static com.finance.anubis.core.constants.Constants.OffLineTask.LOCAL_FILE_SPLIT;
+import static com.finance.anubis.constants.Constants.OffLineTask.LOCAL_FILE_SPLIT;
 
 
 @Component
-@CustomLog
 public class ExternalSortUtil {
+
+    public final static Logger log = LoggerFactory.getLogger(ExternalSortUtil.class);
 
     /**
      * 排序，把输入的多个有序的文件合并为一个有序文件

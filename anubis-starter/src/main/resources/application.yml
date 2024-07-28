@@ -1,6 +1,11 @@
 server:
   port: 8175
 spring:
+  datasource:
+    url: jdbc:mysql://47.115.215.8:3306/hermes?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: qing2020
+    driver-class-name: com.mysql.cj.jdbc.Driver
   application:
     name: anubis-service
   profiles:
@@ -21,20 +26,20 @@ spring:
       config:
         enabled: true
         file-extension: yaml
-        server-addr: dev-nacos.iguming.net:8848
+        server-addr: localhost:8848
 #        namespace: ${spring.cloud.nacos.discovery.namespace}
-logging:
-  config: classpath:fd-log4j2-highlight-${spring.profiles.active}.xml
-  #日志配置
-  file:
-    name: anubis-service  #只对loc生成的文件
-    path: /log/anubis-service #文件保存路径
-  level:
-    com:
-      alibaba:
-        nacos: error
-    feign:
-      Logger: warn
+#logging:
+#  config: classpath:log4j2_dev.xml
+#  #日志配置
+##  file:
+##    name: anubis-service  #只对loc生成的文件
+##    path: /log/anubis-service #文件保存路径
+#  level:
+#    com:
+#      alibaba:
+#        nacos: error
+#    feign:
+#      Logger: warn
 #健康检查配置
 management:
   endpoints:
@@ -52,3 +57,7 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: anubis-service

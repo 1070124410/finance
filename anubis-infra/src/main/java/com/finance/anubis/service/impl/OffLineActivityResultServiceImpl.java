@@ -1,12 +1,12 @@
 package com.finance.anubis.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.finance.anubis.repository.OffLineActivityResultRepository;
-import com.finance.anubis.res.OffLineActivityResultRes;
 import com.finance.anubis.adapter.OffLineActivityResultAdapter;
-import com.finance.anubis.core.constants.enums.OffLineActivityResultType;
-import com.finance.anubis.core.task.model.OffLineActivityResult;
-import com.finance.anubis.req.OffLineActivityResultReq;
+import com.finance.anubis.enums.OffLineActivityResultType;
+import com.finance.anubis.model.OffLineActivityResult;
+import com.finance.anubis.repository.OffLineActivityResultRepository;
+import com.finance.anubis.request.OffLineActivityResultReq;
+import com.finance.anubis.response.OffLineActivityResultRes;
 import com.finance.anubis.service.OffLineActivityResultService;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.finance.anubis.core.constants.enums.OffLineActivityResultType.DETAIL;
-import static com.finance.anubis.core.constants.enums.OffLineActivityResultType.TOTAL;
+import static com.finance.anubis.enums.OffLineActivityResultType.DETAIL;
+import static com.finance.anubis.enums.OffLineActivityResultType.TOTAL;
+
 
 /**
  * @Author yezhaoyang

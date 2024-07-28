@@ -1,6 +1,9 @@
 package com.finance.anubis.core.util;
 
+import com.finance.anubis.utils.JsonUtil;
 import lombok.CustomLog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -21,9 +24,8 @@ import java.util.Map;
  * @Description
  **/
 @Component
-@CustomLog
 public class FileUtil {
-
+    public final static Logger log = LoggerFactory.getLogger(FileUtil.class);
     @Autowired
     private RestTemplate restTemplate;
 

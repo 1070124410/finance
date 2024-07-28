@@ -4,15 +4,15 @@ import cn.hutool.core.lang.TypeReference;
 import cn.hutool.http.Method;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
-import com.finance.anubis.core.constants.Constants;
-import com.finance.anubis.core.constants.enums.OffLineResourceType;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
+import com.finance.anubis.config.OffLineHttpResourceConfig;
+import com.finance.anubis.constants.Constants;
+import com.finance.anubis.core.context.OffLineActivityContext;
+import com.finance.anubis.core.model.OffLineTaskActivity;
 import com.finance.anubis.core.util.ExternalSortUtil;
 import com.finance.anubis.core.util.FileUtil;
-import com.guming.api.pojo.Result;
-import com.finance.anubis.core.config.OffLineHttpResourceConfig;
-import com.finance.anubis.core.context.OffLineActivityContext;
 import com.finance.anubis.core.util.OSSUtil;
+import com.finance.anubis.enums.OffLineResourceType;
+import com.finance.anubis.response.Result;
 import lombok.CustomLog;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
  * @Date 2023/03/06 11:03
  * @Description 通过HTTP获取对账数据
  **/
-@CustomLog
 @Component
 public class HttpFetchExecutor extends PrepareDataTemplate {
 

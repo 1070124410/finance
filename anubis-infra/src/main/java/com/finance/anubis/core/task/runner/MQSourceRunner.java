@@ -1,40 +1,39 @@
 package com.finance.anubis.core.task.runner;
 
 import cn.hutool.core.bean.BeanUtil;
-//import com.alibaba.csp.sentinel.Entry;
-//import com.alibaba.csp.sentinel.SphU;
-//import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.aliyun.openservices.ons.api.*;
+import com.aliyun.openservices.ons.api.Consumer;
 import com.aliyun.openservices.ons.api.order.ConsumeOrderContext;
 import com.aliyun.openservices.ons.api.order.MessageOrderListener;
 import com.aliyun.openservices.ons.api.order.OrderAction;
 import com.aliyun.openservices.shade.com.alibaba.rocketmq.common.message.MessageType;
-import com.finance.anubis.repository.TaskActivityRepository;
-import com.finance.anubis.core.config.EventResourceConfig;
-import com.finance.anubis.core.config.MessageResourceConfig;
-import com.finance.anubis.core.config.OnLineTaskConfig;
-import com.finance.anubis.core.constants.enums.ResourceType;
+import com.finance.anubis.config.EventResourceConfig;
+import com.finance.anubis.config.MessageResourceConfig;
+import com.finance.anubis.config.OnLineTaskConfig;
 import com.finance.anubis.core.context.ActivityContext;
+import com.finance.anubis.core.model.TaskActivity;
 import com.finance.anubis.core.task.executor.SourceExecutor;
-import com.finance.anubis.core.task.model.TaskActivity;
-import com.guming.mq.rocket.DecorateUtils;
-import com.guming.mq.rocket.consumer.BeanConsumerContext;
-import com.guming.mq.rocket.consumer.BridgeConsumerClient;
-import com.guming.mq.rocket.consumer.ConsumerHolder;
+import com.finance.anubis.enums.ResourceType;
+import com.finance.anubis.mq.*;
+import com.finance.anubis.repository.TaskActivityRepository;
 import lombok.CustomLog;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-@CustomLog
+import static com.finance.anubis.enums.Action.DONE;
+
+
 public class MQSourceRunner implements SourceRunner {
 
-
+    public final static Logger log = LoggerFactory.getLogger(MQSourceRunner.class);
     MQConsumer mqConsumer;
 
     SourceExecutor sourceExecutor;
@@ -81,15 +80,17 @@ public class MQSourceRunner implements SourceRunner {
 
 
     private void initConsumerListener(Object bean, String topic, String group, String[] tags, String messageMode) {
-        if (bean instanceof MessageListener) {
-            //普通消息
-            BeanConsumerContext consumerContext = buildConsumerContext(topic, tags, group, bean, MessageType.Normal_Msg, messageMode);
-            BeanForwardingMessageListener listener = new BeanForwardingMessageListener(consumerContext);
-            consumerClient.initializeConsumer(consumerContext, listener);
-        } else if (bean instanceof MessageOrderListener) {
+        //todo 待验证,暂且都走顺序消息
+//        if (bean instanceof MessageListener) {
+//            //普通消息
+//            BeanConsumerContext consumerContext = buildConsumerContext(topic, tags, group, bean, MessageType.Normal_Msg, messageMode);
+//            MessageListener listener = new BeanForwardingMessageListener(consumerContext);
+////            consumerClient.initializeConsumer(consumerContext, listener);
+//        } else
+        if (bean instanceof MessageOrderListener) {
             //顺序消息
             BeanConsumerContext consumerContext = buildConsumerContext(topic, tags, group, bean, MessageType.Order_Msg, messageMode);
-            BeanForwardingMessageOrderListener listener = new BeanForwardingMessageOrderListener(consumerContext);
+            MessageOrderListener listener = new BeanForwardingMessageOrderListener(consumerContext);
             consumerClient.initializeConsumer(consumerContext, listener);
         } else {
             throw new RuntimeException("消息监听器必须继承于MessageListener或者MessageOrderListener，bean：" + bean.getClass().getName());
@@ -107,7 +108,7 @@ public class MQSourceRunner implements SourceRunner {
     public void stop() {
         ConsumerHolder consumerHolder = (ConsumerHolder) BeanUtil.getFieldValue(consumerClient, "consumerHolder");
         String groupId = DecorateUtils.decorateGroup(messageResourceConfig.getGroup());
-        ConsumerHolder.ConsumerWrap consumerWrap = consumerHolder.getConsumer(groupId);
+        ConsumerWrap consumerWrap = consumerHolder.getConsumer(groupId);
         ConcurrentHashMap<String, MessageListener> subscribeTable = (ConcurrentHashMap<String, MessageListener>) BeanUtil.getFieldValue(consumerWrap, "subscribeTable");
         String topicId = DecorateUtils.decorateTopic(messageResourceConfig.getTopic());
         subscribeTable.remove(topicId);
@@ -116,8 +117,9 @@ public class MQSourceRunner implements SourceRunner {
     }
 
 
-    @CustomLog
     public static class MQConsumer implements MessageListener {
+
+        public final static Logger log = LoggerFactory.getLogger(MQConsumer.class);
 
         @Getter
         private final SourceExecutor sourceExecutor;
@@ -173,7 +175,7 @@ public class MQSourceRunner implements SourceRunner {
                     taskActivity.setContext(activityContext);
                     taskActivity.setOnLineTaskConfig(onLineTaskConfig);
                 } else {
-                    if (taskActivity.getAction() != com.finance.anubis.core.constants.enums.Action.DONE) {
+                    if (taskActivity.getAction() != DONE) {
                         return com.aliyun.openservices.ons.api.Action.CommitMessage;
                     }
 

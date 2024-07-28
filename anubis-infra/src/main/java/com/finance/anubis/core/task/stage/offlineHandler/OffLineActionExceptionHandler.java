@@ -1,28 +1,28 @@
 package com.finance.anubis.core.task.stage.offlineHandler;
 
 
-import com.aliyun.openservices.ons.api.Message;
-import com.finance.anubis.core.constants.Constants;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
+import com.finance.anubis.core.model.OffLineTaskActivity;
 import com.finance.anubis.exception.ErrorMsg;
+import com.finance.anubis.exception.StatusCodeException;
+import com.finance.anubis.mq.MessageProducer;
 import com.finance.anubis.repository.OffLineTaskActivityRepository;
 import com.finance.anubis.repository.mq.OffLineActionMqBody;
-import com.guming.api.json.JsonUtil;
-import com.guming.common.exception.StatusCodeException;
 import com.finance.anubis.core.util.DingTalkWebhookUtil;
-import com.guming.mq.api.MessageProducer;
-import com.guming.mq.base.MessageBuilder;
+import com.finance.anubis.utils.JsonUtil;
 import lombok.CustomLog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-@Component
-@CustomLog
-public class OffLineActionExceptionHandler implements Thread.UncaughtExceptionHandler {
+import static com.finance.anubis.constants.Constants.TASK_ACTIVITY_ACTION_TOPIC;
 
+@Component
+public class OffLineActionExceptionHandler implements Thread.UncaughtExceptionHandler {
+    public final static Logger log = LoggerFactory.getLogger(OffLineActionExceptionHandler.class);
     private final MessageProducer messageProducer;
 
     private final DingTalkWebhookUtil dingTalkWebhookUtil;
@@ -44,10 +44,10 @@ public class OffLineActionExceptionHandler implements Thread.UncaughtExceptionHa
             exception = (StatusCodeException) e;
         } else {
             log.error("uncaughtException ", e);
-            dingTalkWebhookUtil.sendAtAllMarkDown("对账平台离线对账错误,未捕获异常", e.getMessage());
+//            dingTalkWebhookUtil.sendAtAllMarkDown("对账平台离线对账错误,未捕获异常", e.getMessage());
         }
         String message = exception.getStatusCode().getReason();
-        ErrorMsg msg = JsonUtil.of(message, ErrorMsg.class);
+        ErrorMsg msg = JsonUtil.string2Obj(message, ErrorMsg.class);
         log.error("ExceptionHandler caught exception:{}", msg);
         OffLineTaskActivity activity = activityRepository.getByBizKey(msg.getBizKey());
         Integer retryTime = activity.getTaskConfig().getRetryTime();
@@ -57,15 +57,11 @@ public class OffLineActionExceptionHandler implements Thread.UncaughtExceptionHa
             log.info("对账平台离线对账异常,重试中,bizKey:{}",activity.getBizKey());
             activityRepository.updateTimes(activity.getId());
         } else {
-            dingTalkWebhookUtil.sendAtAllMarkDown("对账平台离线对账失败", "bizKey:" + msg.getBizKey());
+//            dingTalkWebhookUtil.sendAtAllMarkDown("对账平台离线对账失败", "bizKey:" + msg.getBizKey());
             activityRepository.toFail(activity.getId(), activity.getAction());
         }
-        Message mqMessage = MessageBuilder.create()
-                .topic(Constants.ANUBIS_MQ_TASK_ACTIVITY_ACTION_TOPIC)
-                .tag(msg.getAction().getCode())
-                .body(dto)
-                .build();
-        messageProducer.sendDelayMsg(mqMessage, fibonacci(activity.getTimes()), TimeUnit.SECONDS);
+        int delayLevel = MessageProducer.getRocketMQDelayLevel(fibonacci(activity.getTimes()), TimeUnit.SECONDS);
+        messageProducer.sendDelayMsg(TASK_ACTIVITY_ACTION_TOPIC,msg.getAction().getCode(),dto, delayLevel);
     }
 
     public static int fibonacci(int n) {

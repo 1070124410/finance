@@ -1,31 +1,29 @@
 package com.finance.anubis.core.task.stage.offlineHandler;
 
-import com.aliyun.openservices.ons.api.Message;
-import com.finance.anubis.core.task.model.OffLineTaskActivity;
-import com.finance.anubis.enums.OffLineActivityVerifyResult;
-import com.finance.anubis.repository.OffLineTaskActivityRepository;
-import com.finance.anubis.core.constants.Constants;
-import com.finance.anubis.core.constants.enums.OffLineAction;
-import com.finance.anubis.core.constants.enums.StatusResult;
+import com.finance.anubis.core.model.OffLineTaskActivity;
 import com.finance.anubis.core.util.DingTalkWebhookUtil;
 import com.finance.anubis.core.util.FileUtil;
 import com.finance.anubis.core.util.OSSUtil;
 import com.finance.anubis.dto.OffLineTaskResultDTO;
-import com.guming.mq.api.MessageProducer;
-import com.guming.mq.base.MessageBuilder;
+import com.finance.anubis.enums.OffLineAction;
+import com.finance.anubis.enums.OffLineActivityVerifyResult;
+import com.finance.anubis.enums.StatusResult;
+import com.finance.anubis.mq.MessageProducer;
+import com.finance.anubis.repository.OffLineTaskActivityRepository;
+import com.finance.anubis.utils.JsonUtil;
 import lombok.CustomLog;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.finance.anubis.core.constants.Constants.LocalFile.OSS_COMPARE_FILE;
-import static com.finance.anubis.core.constants.Constants.UNDERLINE_SPLIE;
+import static com.finance.anubis.constants.Constants.LocalFile.OSS_COMPARE_FILE;
+import static com.finance.anubis.constants.Constants.TASK_ACTIVITY_ACTION_TOPIC;
+import static com.finance.anubis.constants.Constants.UNDERLINE_SPLIE;
 
 /**
  * 快速失败执行器
  */
-@CustomLog
 @Component
 public class FailFastOffLineActionHandler extends OffLineActionHandler {
 
@@ -69,7 +67,7 @@ public class FailFastOffLineActionHandler extends OffLineActionHandler {
         //清理OSS文件
 //        ossUtil.delFile(taskName, taskActivity.generateFileName(sourceKey));
 //        ossUtil.delFile(taskName, taskActivity.generateFileName(targetKey));
-        dingTalkWebhookUtil.sendAtAllMarkDown("对账任务快速失败完成", "对账数据清理完成,bizKey:" + taskActivity.getBizKey());
+//        dingTalkWebhookUtil.sendAtAllMarkDown("对账任务快速失败完成", "对账数据清理完成,bizKey:" + taskActivity.getBizKey());
     }
 
     @Override
@@ -81,12 +79,8 @@ public class FailFastOffLineActionHandler extends OffLineActionHandler {
     public void afterHandle(OffLineTaskActivity taskActivity, String key) {
         OffLineTaskResultDTO dto = new OffLineTaskResultDTO();
         dto.setVerifyResult(OffLineActivityVerifyResult.ERROR);
-        Message message = MessageBuilder.create()
-                .topic(Constants.ANUBIS_MQ_TASK_ACTIVITY_ACTION_TOPIC)
-                .tag(taskActivity.getTaskConfig().getName() + UNDERLINE_SPLIE + OffLineAction.DATA_FAIL.getCode())
-                .body(dto)
-                .build();
-        messageProducer.syncSend(message);
+        String tag = taskActivity.getTaskConfig().getName() + UNDERLINE_SPLIE + OffLineAction.DATA_FAIL.getCode();
+        messageProducer.syncSend(TASK_ACTIVITY_ACTION_TOPIC, tag, JsonUtil.toJson(dto));
     }
 
 

@@ -1,7 +1,7 @@
 package com.finance.anubis.service;
 
-import com.finance.anubis.req.TaskActivityReq;
-import com.finance.anubis.res.TaskActivityRes;
+import com.finance.anubis.request.TaskActivityReq;
+import com.finance.anubis.response.TaskActivityRes;
 
 import java.util.List;
 
@@ -36,10 +36,5 @@ public interface TaskActivityService {
      */
     List<TaskActivityRes> getByParams(TaskActivityReq taskActivityReq);
 
-    /**
-     * 分页带参查询任务活动
-     * @param taskActivityReq
-     * @return
-     */
-    List<TaskActivityRes> getPageByParams(TaskActivityReq taskActivityReq);
+
 }

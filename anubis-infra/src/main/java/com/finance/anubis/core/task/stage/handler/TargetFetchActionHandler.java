@@ -1,13 +1,13 @@
 package com.finance.anubis.core.task.stage.handler;
 
+import com.finance.anubis.config.OnLineTaskConfig;
+import com.finance.anubis.config.ResourceConfig;
+import com.finance.anubis.config.URLResourceConfig;
+import com.finance.anubis.core.model.TaskActivity;
+import com.finance.anubis.enums.Action;
+import com.finance.anubis.mq.MessageProducer;
 import com.finance.anubis.repository.TaskActivityRepository;
-import com.finance.anubis.core.config.ResourceConfig;
-import com.finance.anubis.core.config.OnLineTaskConfig;
-import com.finance.anubis.core.config.URLResourceConfig;
-import com.finance.anubis.core.constants.enums.Action;
 import com.finance.anubis.core.context.ActivityContext;
-import com.finance.anubis.core.task.model.TaskActivity;
-import com.guming.mq.api.MessageProducer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 

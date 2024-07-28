@@ -1,16 +1,18 @@
 package com.finance.anubis.core.factory;
 
-import com.finance.anubis.core.constants.enums.FileType;
 import com.finance.anubis.core.util.file.FileParseUtil;
-import lombok.CustomLog;
+import com.finance.anubis.enums.FileType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
 import java.util.Map;
 
 @Component
-@CustomLog
 public class FileParserUtilFactory extends StageHandlerFactory {
+
+    public final static Logger log= LoggerFactory.getLogger(FileParserUtilFactory.class);
 
     private static final Map<FileType, FileParseUtil> FILE_PARSE_MAP = new EnumMap<>(FileType.class);
 

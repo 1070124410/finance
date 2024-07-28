@@ -4,19 +4,15 @@ import cn.hutool.core.lang.TypeReference;
 import cn.hutool.http.Method;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
-//import com.alibaba.csp.sentinel.Entry;
-//import com.alibaba.csp.sentinel.SphU;
-//import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.aliyun.openservices.ons.api.Message;
-import com.finance.anubis.repository.TaskActivityRepository;
-import com.guming.api.pojo.Result;
-import com.finance.anubis.core.config.URLResourceConfig;
-import com.finance.anubis.core.constants.Constants;
-import com.finance.anubis.core.constants.enums.Action;
+import com.finance.anubis.config.URLResourceConfig;
+import com.finance.anubis.constants.Constants;
 import com.finance.anubis.core.context.ActivityContext;
-import com.finance.anubis.core.task.model.TaskActivity;
-import com.guming.mq.api.MessageProducer;
-import com.guming.mq.base.MessageBuilder;
+import com.finance.anubis.core.model.TaskActivity;
+import com.finance.anubis.enums.Action;
+import com.finance.anubis.mq.MessageProducer;
+import com.finance.anubis.repository.TaskActivityRepository;
+import com.finance.anubis.response.Result;
 import lombok.CustomLog;
 import lombok.Getter;
 import org.springframework.web.client.RestTemplate;
@@ -24,10 +20,11 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.finance.anubis.constants.Constants.TASK_ACTIVITY_ACTION_TOPIC;
+
 /**
  * action 执行器
  */
-@CustomLog
 public abstract class ActionHandler {
     @Getter
     protected final Action action;
@@ -85,11 +82,7 @@ public abstract class ActionHandler {
 
     public void afterHandle(TaskActivity taskActivity) {
         // 推送到mq
-        Message message = MessageBuilder.create().topic(Constants.ANUBIS_MQ_TASK_ACTIVITY_ACTION_TOPIC)
-                .tag(taskActivity.getAction().name())
-                .body(JSONUtil.parse(taskActivity.getResult()))
-                .build();
-        messageProducer.syncSend(message);
+        messageProducer.syncSend(TASK_ACTIVITY_ACTION_TOPIC, taskActivity.getAction().name(), JSONUtil.toJsonStr(taskActivity.getResult()));
     }
 
     public ActivityContext.URLSourceContext executeUrlSource(URLResourceConfig urlResourceConfig, final TaskActivity taskActivity) {
@@ -97,7 +90,7 @@ public abstract class ActionHandler {
 
         Map<String, Map<String, Object>> mappedData = taskActivity.getContextMappedData();
         Map<String, Object> requestParams = new HashMap<>();
-        for (Map.Entry<String, ActivityContext.ParamPath> entry : urlResourceConfig.getRequestParamMapping().entrySet()) {
+        for (Map.Entry<String, URLResourceConfig.ParamPath> entry : urlResourceConfig.getRequestParamMapping().entrySet()) {
             requestParams.put(entry.getKey(), mappedData.get(entry.getValue().getSourceKey()).get(entry.getValue().getPath()));
         }
 //        Entry entry = null;
