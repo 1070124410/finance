@@ -2,6 +2,7 @@ package com.finance.anubis.core.task.stage.offlineHandler;
 
 import com.aliyun.openservices.ons.api.Message;
 import com.finance.anubis.core.task.model.OffLineTaskActivity;
+import com.finance.anubis.mq.MessageProducer;
 import com.finance.anubis.repository.OffLineActivityResultRepository;
 import com.finance.anubis.repository.OffLineTaskActivityRepository;
 import com.finance.anubis.repository.mq.OffLineActionMqBody;
@@ -9,7 +10,6 @@ import com.finance.anubis.core.constants.Constants;
 import com.finance.anubis.core.constants.enums.OffLineAction;
 import com.finance.anubis.core.constants.enums.StatusResult;
 import com.finance.anubis.core.task.model.OffLineActivityResult;
-import com.guming.mq.api.MessageProducer;
 import com.guming.mq.base.MessageBuilder;
 import lombok.CustomLog;
 import org.springframework.stereotype.Component;

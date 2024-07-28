@@ -1,0 +1,54 @@
+server:
+  port: 8175
+spring:
+  application:
+    name: anubis-service
+  profiles:
+    active: loc
+    include:
+      - orm
+  main:
+    allow-bean-definition-overriding: true
+  #返回的json体中去除值为null的字段
+  jackson:
+    default-property-inclusion: non_null
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: 2b0d38b1-eccb-454c-b31c-f95a820a4b28
+        registerEnabled: false
+      config:
+        enabled: true
+        file-extension: yaml
+        server-addr: dev-nacos.iguming.net:8848
+#        namespace: ${spring.cloud.nacos.discovery.namespace}
+logging:
+  config: classpath:fd-log4j2-highlight-${spring.profiles.active}.xml
+  #日志配置
+  file:
+    name: anubis-service  #只对loc生成的文件
+    path: /log/anubis-service #文件保存路径
+  level:
+    com:
+      alibaba:
+        nacos: error
+    feign:
+      Logger: warn
+#健康检查配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus #开启默认actuator  info,health,shutdown
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: false      #开启shutdown断点
+  server:
+    address: 127.0.0.1   # 服务监控
+    port: ${server.port}
+  metrics:
+    tags:
+      application: ${spring.application.name}

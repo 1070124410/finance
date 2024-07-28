@@ -30,32 +30,8 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.guming.common</groupId>
-            <artifactId>gcommon-biz</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.guming.common</groupId>
-            <artifactId>gcommon-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.guming.common</groupId>
-            <artifactId>gcommon-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.guming</groupId>
-            <artifactId>ons-client-springboot-starter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.guming.common</groupId>
-            <artifactId>gcommon-database</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.guming</groupId>
-            <artifactId>fd-sentinel</artifactId>
         </dependency>
         <dependency>
             <groupId>net.bytebuddy</groupId>
@@ -69,10 +45,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.guming</groupId>
-            <artifactId>sdk-log4j2</artifactId>
         </dependency>
         <dependency>
             <groupId>com.guming.finance</groupId>
@@ -91,12 +63,8 @@
             <artifactId>aliyun-sdk-oss</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.guming</groupId>
-            <artifactId>dingtalk-sdk</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.guming.fd</groupId>
-            <artifactId>distributed-lock-client</artifactId>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot</artifactId>
         </dependency>
     </dependencies>
 
