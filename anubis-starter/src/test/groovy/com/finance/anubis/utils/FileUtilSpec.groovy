@@ -2,7 +2,7 @@ package com.finance.anubis.utils
 
 import cn.hutool.extra.spring.SpringUtil
 import com.finance.anubis.core.util.FileUtil
-import com.guming.finance.report.common.BaseSpecification
+import com.finance.anubis.report.common.BaseSpecification
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpMethod
 import org.springframework.web.client.RestTemplate

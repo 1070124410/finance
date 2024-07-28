@@ -1,8 +1,6 @@
 package com.finance.anubis.controller;
 
 import com.finance.anubis.res.OffLineActivityResultRes;
-import com.guming.api.pojo.Result;
-import com.guming.common.web.annotation.JsonResponseBody;
 import com.finance.anubis.exception.StatusCodeEnum;
 import com.finance.anubis.feign.OffLineActivityResultFeign;
 import com.finance.anubis.req.OffLineActivityResultReq;

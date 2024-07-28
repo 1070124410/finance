@@ -3,7 +3,6 @@ package com.finance.anubis.feign;
 import com.finance.anubis.constant.AnubisServiceConstant;
 import com.finance.anubis.req.ActivityResultReq;
 import com.finance.anubis.res.ActivityResultRes;
-import com.guming.api.pojo.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;

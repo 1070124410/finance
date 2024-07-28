@@ -16,7 +16,7 @@ import com.finance.anubis.core.util.FileUtil
 import com.finance.anubis.core.util.OSSUtil
 import com.finance.anubis.dto.OffLineTaskDetailResultDTO
 import com.finance.anubis.dto.OffLineTaskTotalResultDTO
-import com.guming.finance.report.common.BaseSpecification
+import com.finance.anubis.report.common.BaseSpecification
 import com.guming.mq.api.MessageProducer
 import mockit.Mock
 import mockit.MockUp

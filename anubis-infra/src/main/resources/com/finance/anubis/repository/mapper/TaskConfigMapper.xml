@@ -70,14 +70,14 @@
             </if>
             <if test="compareKeys != null">
                 and
-                compare_keys=#{compareKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler,javaType=java.lang.String},
+                compare_keys=#{compareKeys,jdbcType=VARCHAR,typeHandler=com.finance.anubis.anubis.repository.handler.ListTypeHandler,javaType=java.lang.String},
             </if>
             <if test="delay != null">
                 and delay=#{delay,jdbcType=INTEGER},
             </if>
             <if test="uniqueKeys != null">
                 and
-                unique_keys=#{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler,javaType=java.lang.String},
+                unique_keys=#{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.finance.anubis.anubis.repository.handler.ListTypeHandler,javaType=java.lang.String},
             </if>
             <if test="name != null">
                 and name=#{name,jdbcType=VARCHAR},
@@ -111,9 +111,9 @@
         #{errorThreshold,jdbcType=INTEGER},
         #{detailSwitch,jdbcType=BOOLEAN},
         #{retryTime,jdbcType=INTEGER},
-        #{compareKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+        #{compareKeys,jdbcType=VARCHAR,typeHandler=com.finance.anubis.anubis.repository.handler.ListTypeHandler},
         #{delay,jdbcType=INTEGER},
-        #{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+        #{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.finance.anubis.anubis.repository.handler.ListTypeHandler},
         #{name,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}
         )
     </insert>
@@ -182,13 +182,13 @@
                 #{retryTime,jdbcType=INTEGER},
             </if>
             <if test="compareKeys != null">
-                #{compareKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+                #{compareKeys,jdbcType=VARCHAR,typeHandler=com.finance.anubis.anubis.repository.handler.ListTypeHandler},
             </if>
             <if test="delay != null">
                 #{delay,jdbcType=INTEGER},
             </if>
             <if test="uniqueKeys != null">
-                #{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+                #{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.finance.anubis.anubis.repository.handler.ListTypeHandler},
             </if>
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
@@ -227,14 +227,14 @@
             </if>
             <if test="compareKeys != null">
                 compare_keys =
-                #{compareKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+                #{compareKeys,jdbcType=VARCHAR,typeHandler=com.finance.anubis.anubis.repository.handler.ListTypeHandler},
             </if>
             <if test="delay != null">
                 delay = #{delay,jdbcType=INTEGER},
             </if>
             <if test="uniqueKeys != null">
                 unique_keys =
-                #{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+                #{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.finance.anubis.anubis.repository.handler.ListTypeHandler},
             </if>
             <if test="name != null">
                 `name` = #{name,jdbcType=VARCHAR},
@@ -259,10 +259,10 @@
         detail_switch = #{detailSwitch,jdbcType=BOOLEAN},
         retry_time=#{retryTime,jdbcType=INTEGER},
         compare_keys =
-        #{compareKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+        #{compareKeys,jdbcType=VARCHAR,typeHandler=com.finance.anubis.anubis.repository.handler.ListTypeHandler},
         delay = #{delay,jdbcType=INTEGER},
         unique_keys =
-        #{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.guming.finance.anubis.repository.handler.ListTypeHandler},
+        #{uniqueKeys,jdbcType=VARCHAR,typeHandler=com.finance.anubis.anubis.repository.handler.ListTypeHandler},
         `name` = #{name,jdbcType=VARCHAR},
         version = #{version,jdbcType=INTEGER}
         where id = #{id,jdbcType=BIGINT}

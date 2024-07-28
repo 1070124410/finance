@@ -11,7 +11,7 @@ import com.finance.anubis.core.job.TaskStatusRemainJobHandler
 import com.finance.anubis.core.task.model.OffLineTaskActivity
 import com.finance.anubis.core.util.DingTalkWebhookUtil
 import com.finance.anubis.repository.OffLineTaskActivityRepository
-import com.guming.finance.report.common.BaseSpecification
+import com.finance.anubis.report.common.BaseSpecification
 import com.guming.mq.api.MessageProducer
 import com.xxl.job.core.biz.model.ReturnT
 import org.spockframework.spring.SpringBean

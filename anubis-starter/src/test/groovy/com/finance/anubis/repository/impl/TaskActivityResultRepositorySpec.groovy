@@ -4,7 +4,7 @@ import cn.hutool.extra.spring.SpringUtil
 import com.google.common.collect.Maps
 import com.guming.api.pojo.page.Limit
 import com.finance.anubis.repository.mapper.TaskActivityResultMapper
-import com.guming.finance.report.common.BaseSpecification
+import com.finance.anubis.report.common.BaseSpecification
 import org.springframework.context.annotation.Import
 
 import java.time.LocalDateTime

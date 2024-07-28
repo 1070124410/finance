@@ -3,7 +3,6 @@ package com.finance.anubis.adapter;
 import com.finance.anubis.core.task.model.TaskActivityResult;
 import com.finance.anubis.req.ActivityResultReq;
 import com.finance.anubis.res.ActivityResultRes;
-import com.guming.api.json.JsonUtil;
 
 /**
  * @Author yezhaoyang

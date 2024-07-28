@@ -8,7 +8,7 @@ import com.finance.anubis.core.config.OffLineTaskConfig
 import com.finance.anubis.core.factory.FileParserUtilFactory
 import com.finance.anubis.core.task.executor.FileFetchExecutor
 import com.finance.anubis.core.util.OSSUtil
-import com.guming.finance.report.common.BaseSpecification
+import com.finance.anubis.report.common.BaseSpecification
 import mockit.Mock
 import mockit.MockUp
 import org.spockframework.spring.SpringBean

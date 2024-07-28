@@ -1,4 +1,4 @@
-package com.guming.finance.report.common
+package com.finance.anubis.report.common
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener
 import com.github.springtestdbunit.annotation.DbUnitConfiguration
@@ -12,8 +12,8 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener
 import spock.lang.Specification
-import com.guming.finance.report.common.CommonConfiguration
-import com.guming.finance.report.common.CsvDataSetLoader
+import com.finance.anubis.report.common.CommonConfiguration
+import com.finance.anubis.report.common.CsvDataSetLoader
 /**
  * @author baocheng
  * @date 2022/12/26 17:08

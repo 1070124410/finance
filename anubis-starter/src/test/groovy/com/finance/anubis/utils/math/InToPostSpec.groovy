@@ -1,7 +1,7 @@
 package com.finance.anubis.utils.math
 
 import com.finance.anubis.core.util.math.InToPost
-import com.guming.finance.report.common.BaseSpecification
+import com.finance.anubis.report.common.BaseSpecification
 
 /**
  * @Author yezhaoyang

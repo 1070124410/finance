@@ -11,7 +11,7 @@ import com.finance.anubis.core.context.OffLineActivityContext
 import com.finance.anubis.core.task.stage.offlineHandler.DataCompareDetailActionHandler
 import com.finance.anubis.core.util.FileUtil
 import com.finance.anubis.core.util.OSSUtil
-import com.guming.finance.report.common.BaseSpecification
+import com.finance.anubis.report.common.BaseSpecification
 import com.guming.mq.api.MessageProducer
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired

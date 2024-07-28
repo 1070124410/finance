@@ -1,4 +1,4 @@
-package com.guming.finance.report.common;
+package com.finance.anubis.report.common;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
@@ -34,8 +34,8 @@ import java.util.concurrent.Executor;
  * @date 2022/12/26 16:54
  */
 @Configuration
-//@ComponentScan(basePackages = {"com.guming.finance.anubis.repository"})
-//@MapperScan(basePackages = {"com.guming.finance.anubis.repository.mapper"})
+//@ComponentScan(basePackages = {"com.finance.anubis.anubis.repository"})
+//@MapperScan(basePackages = {"com.finance.anubis.anubis.repository.mapper"})
 @Import({CommonConfiguration.TestPersistentConfiguration.class})
 //@ConditionalOnClass({SqlSessionFactory.class, SqlSessionFactoryBean.class})
 //@ConditionalOnSingleCandidate(DataSource.class)

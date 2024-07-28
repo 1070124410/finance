@@ -1,4 +1,4 @@
-package com.guming.finance.report.common
+package com.finance.anubis.report.common
 
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.FileUtils

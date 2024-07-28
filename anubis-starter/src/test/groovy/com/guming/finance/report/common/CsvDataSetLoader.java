@@ -1,4 +1,4 @@
-package com.guming.finance.report.common;
+package com.finance.anubis.report.common;
 
 import com.github.springtestdbunit.dataset.AbstractDataSetLoader;
 import org.dbunit.dataset.IDataSet;

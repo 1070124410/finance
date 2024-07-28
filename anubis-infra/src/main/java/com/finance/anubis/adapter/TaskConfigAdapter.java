@@ -1,9 +1,9 @@
-//package com.guming.finance.anubis.adapter;
+//package com.finance.anubis.anubis.adapter;
 //
 //import com.guming.api.json.JsonUtil;
-//import com.guming.finance.anubis.core.config.*;
-//import com.guming.finance.anubis.req.OffLineTaskConfigReq;
-//import com.guming.finance.anubis.req.TaskConfigReq;
+//import com.finance.anubis.anubis.core.config.*;
+//import com.finance.anubis.anubis.req.OffLineTaskConfigReq;
+//import com.finance.anubis.anubis.req.TaskConfigReq;
 //
 ///**
 // * @Author yezhaoyang

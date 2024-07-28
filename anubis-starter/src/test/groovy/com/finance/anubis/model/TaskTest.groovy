@@ -1,7 +1,7 @@
 package com.finance.anubis.model
 
 
-import com.guming.finance.report.common.BaseSpecification
+import com.finance.anubis.report.common.BaseSpecification
 
 /**
  * @Author yezhaoyang

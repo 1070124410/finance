@@ -9,7 +9,7 @@ import com.finance.anubis.core.constants.enums.OffLineActivityResultType
 import com.finance.anubis.core.constants.enums.OrderVerifyResultEnum
 import com.finance.anubis.core.context.OffLineActivityContext
 import com.finance.anubis.core.task.model.OffLineActivityResult
-import com.guming.finance.report.common.BaseSpecification
+import com.finance.anubis.report.common.BaseSpecification
 /**
  * @Author yezhaoyang
  * @Date 2023/03/15 10:04

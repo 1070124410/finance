@@ -10,7 +10,7 @@ import com.finance.anubis.repository.dto.TaskDTO
 import com.finance.anubis.repository.entity.TaskConfigEntity
 import com.finance.anubis.repository.entity.TaskEntity
 import com.finance.anubis.repository.mapper.TaskConfigMapper
-import com.guming.finance.report.common.BaseSpecification
+import com.finance.anubis.report.common.BaseSpecification
 import mockit.Mock
 import mockit.MockUp
 import org.springframework.context.annotation.Import

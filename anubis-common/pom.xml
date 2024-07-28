@@ -6,9 +6,12 @@
     <parent>
         <groupId>com.finance.anubis</groupId>
         <artifactId>anubis</artifactId>
-        <version>${revision}</version>
+        <version>0.0.2-RELEASE</version>
     </parent>
-    <artifactId>anubis-client</artifactId>
+
+    <groupId>com.finance.anubis</groupId>
+    <artifactId>anubis-common</artifactId>
+
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -16,13 +19,11 @@
     </properties>
 
     <dependencies>
+        <!-- 引入jackson依赖包-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.guming.common</groupId>
-            <artifactId>gcommon-api</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.14.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -30,6 +31,14 @@
             <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.17.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
     </dependencies>
-
 </project>

@@ -1,4 +1,4 @@
-package com.guming.finance.mq
+package com.finance.anubis.mq
 
 import cn.hutool.extra.spring.SpringUtil
 import com.aliyun.openservices.ons.api.Action
@@ -9,7 +9,7 @@ import com.finance.anubis.core.factory.ActionHandlerFactory
 import com.finance.anubis.core.task.model.TaskActivity
 import com.finance.anubis.core.task.stage.handler.SourceFetchActionHandler
 import com.finance.anubis.repository.TaskActivityRepository
-import com.guming.finance.report.common.BaseSpecification
+import com.finance.anubis.report.common.BaseSpecification
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import

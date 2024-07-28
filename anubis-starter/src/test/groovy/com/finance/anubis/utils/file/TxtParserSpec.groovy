@@ -3,7 +3,7 @@ package com.finance.anubis.utils.file
 import cn.hutool.extra.spring.SpringUtil
 import com.finance.anubis.core.constants.enums.FileType
 import com.finance.anubis.core.util.file.TxtParser
-import com.guming.finance.report.common.BaseSpecification
+import com.finance.anubis.report.common.BaseSpecification
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
 

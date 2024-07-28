@@ -1,9 +1,6 @@
 package com.finance.anubis;
 
 import cn.hutool.json.JSONUtil;
-import com.guming.common.biz.nacos.spring.annotation.EnableNacosConfig;
-import com.guming.common.redis.annotation.EnableRedis;
-import com.guming.fd.distributed.lock.config.EnableDistributedLock;
 import com.finance.anubis.core.config.EventResourceConfig;
 import com.finance.anubis.core.config.MessageResourceConfig;
 import com.finance.anubis.core.constants.enums.ResourceType;

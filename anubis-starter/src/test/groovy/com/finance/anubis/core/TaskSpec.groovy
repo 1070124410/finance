@@ -1,18 +1,18 @@
 package com.finance.anubis.core
-//package com.guming.finance.anubis.core
+//package com.finance.anubis.anubis.core
 //
 //import cn.hutool.extra.spring.EnableSpringUtil
 //import com.aliyun.openservices.ons.api.PropertyValueConst
-//import com.guming.finance.anubis.Application
-//import com.guming.finance.anubis.core.config.EventResourceConfig
-//import com.guming.finance.anubis.core.config.OnLineTaskConfig
-//import com.guming.finance.anubis.core.config.URLResourceConfig
-//import com.guming.finance.anubis.core.constants.enums.MessageInfraType
-//import com.guming.finance.anubis.core.constants.enums.ResourceType
-//import com.guming.finance.anubis.core.constants.enums.TaskStatus
-//import com.guming.finance.anubis.core.context.ActivityContext
-//import com.guming.finance.anubis.core.task.model.Task
-//import com.guming.finance.anubis.repository.TaskRepository
+//import com.finance.anubis.anubis.Application
+//import com.finance.anubis.anubis.core.config.EventResourceConfig
+//import com.finance.anubis.anubis.core.config.OnLineTaskConfig
+//import com.finance.anubis.anubis.core.config.URLResourceConfig
+//import com.finance.anubis.anubis.core.constants.enums.MessageInfraType
+//import com.finance.anubis.anubis.core.constants.enums.ResourceType
+//import com.finance.anubis.anubis.core.constants.enums.TaskStatus
+//import com.finance.anubis.anubis.core.context.ActivityContext
+//import com.finance.anubis.anubis.core.task.model.Task
+//import com.finance.anubis.anubis.repository.TaskRepository
 //import com.guming.mq.annotation.EnableMQ
 //import com.guming.mq.config.MQBaseAutoConfiguration
 //import conf.BaseSpecification
@@ -26,7 +26,7 @@ package com.finance.anubis.core
 //
 //import javax.annotation.Resource
 //
-//@ComponentScan(basePackages = "com.guming.finance.anubis",
+//@ComponentScan(basePackages = "com.finance.anubis.anubis",
 //        excludeFilters = [@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = [Application.class])])
 //@EnableSpringUtil
 //@DirtiesContext

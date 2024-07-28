@@ -1,4 +1,4 @@
-package com.guming.finance.report.common
+package com.finance.anubis.report.common
 
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql

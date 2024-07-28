@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.guming.finance</groupId>
+    <groupId>com.finance.anubis</groupId>
     <artifactId>anubis</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
@@ -14,6 +14,7 @@
         <module>anubis-application</module>
         <module>anubis-starter</module>
         <module>anubis-domain</module>
+        <module>anubis-common</module>
     </modules>
     <properties>
         <revision>0.0.2-RELEASE</revision>
@@ -57,32 +58,19 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.guming.finance</groupId>
+                <groupId>com.finance.anubis</groupId>
                 <artifactId>anubis-infra</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.guming.finance</groupId>
+                <groupId>com.finance.anubis</groupId>
                 <artifactId>anubis-client</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.guming.finance</groupId>
+                <groupId>com.finance.anubis</groupId>
                 <artifactId>anubis-domain</artifactId>
                 <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.guming.common</groupId>
-                <artifactId>common-framework</artifactId>
-                <version>${guming-common-framework.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- rocketMQ -->
-            <dependency>
-                <groupId>com.guming</groupId>
-                <artifactId>ons-client-springboot-starter</artifactId>
-                <version>${ons-client.version}</version>
             </dependency>
             <!-- mapstruct -->
             <dependency>
@@ -97,35 +85,6 @@
                 <version>${cglib.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.guming</groupId>
-                <artifactId>dingtalk-sdk</artifactId>
-                <version>${dingtalk.sdk.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-inline</artifactId>
-                <version>${mockito.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>${mockito.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>net.bytebuddy</groupId>
-                <artifactId>byte-buddy</artifactId>
-                <version>${byte-buddy.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
@@ -134,56 +93,6 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-openfeign</artifactId>
                 <version>${spring-clound.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.janbols</groupId>
-                <artifactId>spock-dbunit</artifactId>
-                <version>${spock-dbunit.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.guming</groupId>
-                <artifactId>fd-sentinel</artifactId>
-                <version>${fd-sentinel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.spockframework</groupId>
-                <artifactId>spock-spring</artifactId>
-                <version>${spockframework.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.spockframework</groupId>
-                <artifactId>spock-core</artifactId>
-                <version>${spockframework.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.dbunit</groupId>
-                <artifactId>dbunit</artifactId>
-                <version>${dbunit.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.microwww</groupId>
-                <artifactId>redis-server</artifactId>
-                <version>${redis-server.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.springtestdbunit</groupId>
-                <artifactId>spring-test-dbunit</artifactId>
-                <version>${spring-test-dbunit.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.platform</groupId>
-                <artifactId>junit-platform-engine</artifactId>
-                <version>1.10.3</version>
-            </dependency>
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-module-junit4</artifactId>
-                <version>${powermock.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-api-mockito2</artifactId>
-                <version>${powermock.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.xuxueli</groupId>

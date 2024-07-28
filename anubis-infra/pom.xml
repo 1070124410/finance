@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.guming.finance</groupId>
+        <groupId>com.finance.anubis</groupId>
         <artifactId>anubis</artifactId>
         <version>${revision}</version>
     </parent>
@@ -18,16 +18,8 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -47,7 +39,7 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.guming.finance</groupId>
+            <groupId>com.finance.anubis</groupId>
             <artifactId>anubis-client</artifactId>
         </dependency>
         <dependency>
@@ -55,7 +47,7 @@
             <artifactId>xxl-job-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.guming.finance</groupId>
+            <groupId>com.finance.anubis</groupId>
             <artifactId>anubis-domain</artifactId>
         </dependency>
         <dependency>
@@ -65,6 +57,31 @@
         <dependency>
             <groupId>org.apache.rocketmq</groupId>
             <artifactId>rocketmq-spring-boot</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.29</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>dingtalk</artifactId>
+            <version>2.1.36</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.15</version>
+        </dependency>
+        <dependency>
+            <groupId>com.finance.anubis</groupId>
+            <artifactId>anubis-common</artifactId>
         </dependency>
     </dependencies>
 
